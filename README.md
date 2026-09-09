@@ -27,10 +27,16 @@ way: build your own content on top, and the project stays yours.
 
 ```bash
 npm install
-npm test          # 83 tests
-npm run typecheck
+npm test          # 130 tests
+npm run typecheck # core (DOM-free) and browser configs
 npm run sim       # headless balance simulation
+npm run demo      # bundle the browser demo
 ```
+
+To view the demo, serve the repo over HTTP and open `demo/index.html`; ES
+modules will not load from `file://`.
+
+![The demo mid-battle](demo/screenshot.png)
 
 ## Quickstart
 
@@ -99,12 +105,15 @@ src/
   battle/     damage, turn order, round resolver, setup, enemy AI
   field/      elevation grid, interactables, field abilities
   save/       versioned save files with migration
+  presentation/  timeline, playback clock, 2.5D projection, canvas renderer
   data/       starter content pack (sample content; replace it)
 docs/
   DESIGN.md        mechanics specification
   INTEGRATION.md   binding to an engine, porting checklist
   HD2D.md          the 2.5D presentation contract
+  PRESENTATION.md  the implemented presentation layer
 tools/sim.ts       headless balance simulator
+demo/              runnable browser demo driving the real core
 ```
 
 ## Content is data
@@ -120,11 +129,12 @@ a worked example of the data shapes. It is sample content, not a game.
 
 ## Next steps
 
-The rules layer is complete and tested. Building a game on top means:
+The rules layer and the presentation layer are both complete and tested.
+Building a game on top means:
 
 - **Your own content pack** — replace `starterPack` entirely.
-- **A presentation layer** — see `docs/HD2D.md` for the event-to-animation
-  contract, sprite billboarding and elevation mapping.
+- **Real sprite art** — the renderer draws procedural placeholders. Swap
+  `drawActor` for a sheet blit; see `docs/PRESENTATION.md`.
 - **Inventory and shops** — the resolver emits an intent event for items and
   leaves the rules to you, since inventory models vary wildly between projects.
 - **Map and encounter data** — the grid loads from JSON; authoring is yours.
