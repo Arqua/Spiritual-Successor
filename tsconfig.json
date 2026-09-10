@@ -21,5 +21,5 @@
     "verbatimModuleSyntax": false
   },
   "include": ["src/**/*.ts", "tools/**/*.ts", "test/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "src/presentation/renderer", "demo"]
 }

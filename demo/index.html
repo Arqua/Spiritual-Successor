@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Aetherlight — presentation layer demo</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; background: #0d0b18; color: #e8e2f8;
+    font: 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+    display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 18px;
+  }
+  h1 { font-size: 15px; font-weight: 600; margin: 0; letter-spacing: .04em; color: #cfc6e8; }
+  canvas { image-rendering: pixelated; border: 1px solid #352d52; border-radius: 4px; display: block; }
+  .controls { display: flex; gap: 8px; }
+  button {
+    background: #241f3a; color: #e8e2f8; border: 1px solid #4a4068;
+    padding: 6px 12px; border-radius: 3px; font: inherit; cursor: pointer;
+  }
+  button:hover { background: #322a4f; }
+  #status { color: #8f86ab; font-size: 12px; }
+  .note { color: #6f6790; font-size: 11px; max-width: 720px; text-align: center; line-height: 1.5; }
+</style>
+</head>
+<body>
+  <h1>Aetherlight — presentation layer</h1>
+  <canvas id="stage" width="760" height="440"></canvas>
+  <div class="controls">
+    <button id="step">next round</button>
+    <button id="skip">skip</button>
+    <button id="speed">speed 1x</button>
+    <button id="restart">restart</button>
+  </div>
+  <div id="status">…</div>
+  <p class="note">
+    Driven by the real rules core. Each round is resolved instantly by
+    <code>resolveRound()</code>, scheduled by <code>buildTimeline()</code>, and paced out by
+    <code>Playback</code>. Character art is procedural — the library ships no assets.
+  </p>
+  <script type="module" src="./bundle.js"></script>
+</body>
+</html>

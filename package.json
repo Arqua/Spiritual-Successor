@@ -21,14 +21,16 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.browser.json",
     "test": "vitest run",
     "test:watch": "vitest",
     "sim": "tsx tools/sim.ts",
-    "schema": "tsx tools/emit-schema.ts"
+    "schema": "tsx tools/emit-schema.ts",
+    "demo": "esbuild demo/main.ts --bundle --format=esm --outfile=demo/bundle.js && echo \"open demo/index.html\""
   },
   "devDependencies": {
     "@types/node": "^22.20.2",
+    "esbuild": "^0.28.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"

@@ -38,3 +38,16 @@ export * from './field/abilities.js';
 
 // Save
 export * from './save/serialize.js';
+
+// Presentation (engine-agnostic parts only).
+//
+// The canvas backend is deliberately NOT exported here: it depends on the DOM,
+// and this entry point is compiled without the DOM lib so that browser APIs
+// cannot leak into the portable layers. Import it directly from
+// './presentation/renderer/canvas2d.js' in a browser build.
+export * from './presentation/easing.js';
+export * from './presentation/camera.js';
+export * from './presentation/sprites.js';
+export * from './presentation/timeline.js';
+export * from './presentation/playback.js';
+export * from './presentation/theme.js';
