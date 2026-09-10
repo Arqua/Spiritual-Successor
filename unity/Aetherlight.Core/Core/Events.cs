@@ -67,6 +67,14 @@ namespace Aetherlight.Core
     public sealed class RewardEvent : GameEvent { public long Xp; public long Coin; public List<string> ItemIds = new List<string>(); }
     public sealed class MessageEvent : GameEvent { public string Text = ""; }
 
+    public sealed class FieldEffectEvent : GameEvent
+    {
+        public string AbilityId = "";
+        public int OriginX;
+        public int OriginY;
+        public List<string> TargetIds = new List<string>();
+    }
+
     /// <summary>Accumulator used by the resolver; also handy in tests.</summary>
     public sealed class EventLog
     {

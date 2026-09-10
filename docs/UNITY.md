@@ -85,7 +85,7 @@ the generator deliberately, and change both sides in the same commit.
 
 ## What is ported, and what is not
 
-Ported and tested (57 tests):
+Ported and tested (80 tests):
 
 - `Core/Rng.cs` - bit-exact with the TypeScript generator
 - `Core/Events.cs` - the event stream, as a class hierarchy
@@ -104,10 +104,12 @@ Ported and tested (57 tests):
 - `Battle/Resolve.cs` - the round resolver
 - `Battle/Setup.cs` - building a battle, and writing results back
 - `Battle/Ai.cs` - weighted enemy decisions
+- `Field/Grid.cs` - elevation grid, ledge rule, line of sight
+- `Field/Interactables.cs` - objects that declare what they respond to
+- `Field/FieldAbilities.cs` - shapes and the overworld puzzle effects
 
 Not yet ported:
 
-- `Field/` - grid, interactables, field abilities
 - `Presentation/` - timeline and playback (the canvas renderer is web-only and
   should be replaced by a Unity renderer, not ported)
 - Save serialization.
