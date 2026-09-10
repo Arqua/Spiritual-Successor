@@ -27,6 +27,8 @@ demo/bundle.js
 *.sln
 !unity/Aetherlight.Core/Aetherlight.Core.csproj
 !unity/Aetherlight.Core.Tests/Aetherlight.Core.Tests.csproj
+!unity/tools/unity-stub/UnityEngine.Stub.csproj
+!unity/tools/unity-stub/Aetherlight.Unity.Compile.csproj
 sysinfo.txt
 crashlytics-build.properties
 

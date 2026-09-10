@@ -12,9 +12,25 @@ unity/
     package.json               so Unity can reference it as a local package
     Aetherlight.Core.asmdef    noEngineReferences: true
     Aetherlight.Core.csproj    netstandard2.1, so dotnet can build/test it
+  Aetherlight.Unity/           the renderer. A UPM package; engine refs allowed
+    Runtime/                   MonoBehaviours that draw the timeline
+    README.md                  scene setup, component reference
   Aetherlight.Core.Tests/      xUnit, runs headless in seconds
   build/                       all bin/obj output (gitignored)
 ```
+
+Two packages, and the split is the point: `Aetherlight.Core` sets
+`noEngineReferences`, so the compiler rejects a `UnityEngine` import in the
+rules layer. `Aetherlight.Unity` is where the engine is allowed to appear.
+Add both to `Packages/manifest.json`:
+
+```json
+"com.aetherlight.core": "file:../../Aetherlight.Core",
+"com.aetherlight.unity": "file:../../Aetherlight.Unity"
+```
+
+`unity/Aetherlight.Unity/README.md` has the scene setup - camera, prefab
+structure, how combatant ids bind views to the battle, and a bootstrap script.
 
 The core targets **netstandard2.1**, which is what Unity 2021.2+ consumes. The
 same sources therefore compile in both places: `dotnet test` for a two-second
@@ -114,13 +130,17 @@ Ported and tested (132 tests):
 - `Save/Save.cs` - save files, sharing a wire format with TypeScript
 - `Core/Json.cs` - now writes as well as reads, for saves
 
-**The port is complete.** Everything that is rules is in both languages.
+**The port is complete**, and the Unity renderer that replaces the web backend
+now exists in `unity/Aetherlight.Unity/`.
 
-The one thing deliberately not ported is `src/presentation/renderer/canvas2d.ts`.
-That is the web backend; a Unity renderer replaces it rather than translating
-it. It consumes the same timeline the ported `Playback` produces, so writing
-one means implementing a draw loop against `RenderFold.ForEntity` and
-`RenderFold.ForScene` - see `docs/PRESENTATION.md` for the contract.
+`src/presentation/renderer/canvas2d.ts` was never ported and never should be:
+it is the web backend. The Unity renderer is a parallel implementation of the
+same contract, consuming the same timeline the ported `Playback` produces.
+
+Note that the Unity renderer does **not** use the ported
+`Presentation/Camera.cs`. That projection exists for backends which must map to
+screen space themselves; Unity has a camera, so the renderer places sprites in
+world space and lets the engine project them.
 
 ## Saves move between the two engines
 

@@ -5,6 +5,7 @@ Two implementations of one game, plus a browser reference renderer.
 ```
 src/                     TypeScript rules core + presentation layer (source of truth)
 unity/Aetherlight.Core/  C# port, consumed by Unity as a local UPM package
+unity/Aetherlight.Unity/ Unity renderer (MonoBehaviours). Engine refs allowed here
 unity/Aetherlight.Core.Tests/   xUnit tests for the port
 demo/                    browser demo driving the TypeScript core
 ```
@@ -72,6 +73,13 @@ already redirects both to `unity/build/`; leave it that way.
 The core package sets `"noEngineReferences": true` in its asmdef. That is
 deliberate - it makes the compiler reject a `UnityEngine` import in the rules
 layer, the same boundary the DOM-free tsconfig enforces on the TypeScript side.
+Engine code belongs in `unity/Aetherlight.Unity/`, which is the only package
+allowed to reference `UnityEngine`.
+
+The renderer cannot be compiled here - it needs the real engine assemblies - so
+it is verified against a stub of the UnityEngine surface it uses. That proves
+the renderer's own code is internally consistent; it cannot prove the real Unity
+signatures match. Editor import is the check that closes that gap.
 
 ## Conventions
 
