@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Compile-check project for the renderer. Not shipped, not imported by Unity.
+    Run it with: dotnet build unity/tools/unity-stub/Aetherlight.Unity.Compile.csproj
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Aetherlight.Unity.Compile</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../../Aetherlight.Unity/Runtime/**/*.cs" />
+    <ProjectReference Include="UnityEngine.Stub.csproj" />
+    <ProjectReference Include="../../Aetherlight.Core/Aetherlight.Core.csproj" />
+  </ItemGroup>
+
+</Project>

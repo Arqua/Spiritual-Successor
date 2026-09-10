@@ -1,0 +1,16 @@
+{
+  "name": "Aetherlight.Unity",
+  "rootNamespace": "Aetherlight.Unity",
+  "references": [
+    "Aetherlight.Core"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
