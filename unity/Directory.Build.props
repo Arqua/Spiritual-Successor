@@ -1,0 +1,19 @@
+<Project>
+
+  <!--
+    Push bin/ and obj/ outside the package folders.
+
+    Unity imports everything under a package or Assets folder that it
+    recognises as a script. A default `dotnet build` writes obj/Debug/.../
+    *.AssemblyInfo.cs next to the sources, and Unity happily compiles those
+    generated files too - producing duplicate-attribute errors that look like
+    they come from your own code. Redirecting the output here means the same
+    sources can be built by dotnet for fast headless testing AND consumed by
+    Unity, with nothing to clean up in between.
+  -->
+  <PropertyGroup>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)build/$(MSBuildProjectName)/bin/</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)build/$(MSBuildProjectName)/obj/</BaseIntermediateOutputPath>
+  </PropertyGroup>
+
+</Project>

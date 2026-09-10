@@ -1,0 +1,31 @@
+# Unity serialises scenes, prefabs and assets as YAML. Force them to text so
+# diffs and merges are possible at all, and route merges through Unity's own
+# merge tool (configure with: git config merge.unityyamlmerge.driver ...).
+*.unity      text eol=lf merge=unityyamlmerge
+*.prefab     text eol=lf merge=unityyamlmerge
+*.asset      text eol=lf merge=unityyamlmerge
+*.mat        text eol=lf merge=unityyamlmerge
+*.anim       text eol=lf merge=unityyamlmerge
+*.controller text eol=lf merge=unityyamlmerge
+*.meta       text eol=lf
+*.cs         text eol=lf diff=csharp
+*.asmdef     text eol=lf
+
+# Game art and audio go through LFS, because they are binary and they get
+# large. These rules are scoped to the Unity asset directories on purpose:
+# a repo-wide `*.png` rule would also capture documentation screenshots, which
+# are small, already committed as ordinary git objects, and should stay that
+# way. Converting an existing file to LFS rewrites how it is stored, so widen
+# these globs only alongside a deliberate migration.
+#
+# git-lfs must be installed before adding art: without it, a matching file is
+# marked for a filter that cannot run, and the working copy is left holding a
+# pointer instead of the asset. Run `git lfs install` first.
+unity/**/Assets/**/*.psd filter=lfs diff=lfs merge=lfs -text
+unity/**/Assets/**/*.png filter=lfs diff=lfs merge=lfs -text
+unity/**/Assets/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+unity/**/Assets/**/*.tga filter=lfs diff=lfs merge=lfs -text
+unity/**/Assets/**/*.fbx filter=lfs diff=lfs merge=lfs -text
+unity/**/Assets/**/*.wav filter=lfs diff=lfs merge=lfs -text
+unity/**/Assets/**/*.ogg filter=lfs diff=lfs merge=lfs -text
+unity/**/Assets/**/*.mp3 filter=lfs diff=lfs merge=lfs -text

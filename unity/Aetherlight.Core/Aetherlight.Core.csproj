@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    netstandard2.1 is what Unity 2021.2+ consumes, so this library compiles
+    both here (for fast, headless verification with `dotnet test`) and inside
+    Unity with no changes. It deliberately references nothing from UnityEngine:
+    the rules layer must stay engine-agnostic, exactly as the TypeScript
+    original does.
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <RootNamespace>Aetherlight</RootNamespace>
+  </PropertyGroup>
+
+</Project>
