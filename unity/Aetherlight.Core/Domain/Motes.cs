@@ -20,12 +20,69 @@ namespace Aetherlight.Domain
         Recovering,
     }
 
+    public enum MoteTargeting
+    {
+        OneFoe,
+        AllFoes,
+        Self,
+        OneAlly,
+        AllAllies,
+    }
+
+    public enum MoteEffectKind
+    {
+        Damage,
+        Heal,
+        Revive,
+        Status,
+        Buff,
+        RestoreAether,
+        Utility,
+    }
+
+    /// <summary>
+    /// What happens when a mote is unleashed in battle.
+    ///
+    /// Modelled as one class with a Kind discriminator rather than a hierarchy:
+    /// the variants share most of their fields, and a flat shape survives JSON
+    /// round-tripping through Unity's serializer without custom converters.
+    /// </summary>
+    public sealed class MoteEffect
+    {
+        public MoteEffectKind Kind;
+        public MoteTargeting Targeting = MoteTargeting.OneFoe;
+
+        /// <summary>Damage or healing power, per Kind.</summary>
+        public double Power;
+
+        /// <summary>Damage only: skip defense mitigation entirely.</summary>
+        public bool IgnoresDefense;
+
+        /// <summary>Revive only: fraction of max HP restored.</summary>
+        public double HpFraction;
+
+        /// <summary>Status only.</summary>
+        public string? StatusId;
+        public double Chance;
+
+        /// <summary>Buff only.</summary>
+        public StatModifier? Modifier;
+        public int Rounds;
+
+        /// <summary>RestoreAether only.</summary>
+        public double Amount;
+
+        /// <summary>Utility only: a free-form tag the host game interprets.</summary>
+        public string? Tag;
+    }
+
     public sealed class MoteDef
     {
         public string Id = "";
         public string Name = "";
         public Element Element;
         public StatModifier? Bonus;
+        public MoteEffect Effect = new MoteEffect();
         public int RecoveryRounds = Motes.DefaultRecoveryRounds;
         public string? FieldAbilityId;
     }

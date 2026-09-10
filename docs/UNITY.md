@@ -85,21 +85,32 @@ the generator deliberately, and change both sides in the same commit.
 
 ## What is ported, and what is not
 
-Ported and tested (30 tests):
+Ported and tested (54 tests):
 
 - `Core/Rng.cs` - bit-exact with the TypeScript generator
+- `Core/Events.cs` - the event stream, as a class hierarchy
+- `Core/Registry.cs` - content packs, merging, cross-reference validation
 - `Domain/Elements.cs` - affinity maths, opposed pairs, element tables
 - `Domain/Stats.cs` - stat blocks, modifiers, growth curves, XP
-- `Domain/Motes.cs` - the set/standby/recovering cycle
+- `Domain/Motes.cs` - the set/standby/recovering cycle and mote effects
 - `Domain/Classes.cs` - class derivation and its tie-breaking
+- `Domain/Status.cs`, `Arts.cs`, `Equipment.cs`, `Summons.cs`, `Enemy.cs`
+- `Domain/Actor.cs` - stat derivation in its fixed composition order
+- `Battle/Damage.cs` - asymptotic mitigation, crits, evasion, healing
+- `Battle/Order.cs` - agility ordering with priority tiers
+- `Battle/State.cs` - combatants, commands, battle state
+- `Battle/Resolve.cs` - the round resolver
+- `Battle/Setup.cs` - building a battle, and writing results back
+- `Battle/Ai.cs` - weighted enemy decisions
 
 Not yet ported:
 
-- `Battle/` - damage, turn order, the round resolver, enemy AI
 - `Field/` - grid, interactables, field abilities
 - `Presentation/` - timeline and playback (the canvas renderer is web-only and
   should be replaced by a Unity renderer, not ported)
-- `Core/Registry.cs`, save serialization, and content-pack loading
+- Save serialization, and loading content packs from JSON on disk. The
+  registry and every definition type exist; what is missing is the reader that
+  turns a JSON pack into them.
 
 Port in dependency order, and port each module's TypeScript test alongside it.
 The suites in `test/` are written as specifications rather than for coverage:
