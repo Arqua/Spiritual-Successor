@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Aetherlight.Core/Aetherlight.Core.csproj" />
+  </ItemGroup>
+
+  <!--
+    The canonical content and its fingerprint are the shared fixtures both
+    implementations read, so copy them next to the test assembly rather than
+    reaching up the tree at runtime with a path that breaks under a different
+    working directory.
+  -->
+  <ItemGroup>
+    <None Include="../../content/starter.json" Link="content/starter.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../content/starter.fingerprint.txt" Link="content/starter.fingerprint.txt" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../content/reference-save.json" Link="content/reference-save.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -99,6 +99,18 @@ export function migrate(save: SaveFile): SaveFile {
     actor.motes = actor.motes ?? [];
     actor.tempModifiers = actor.tempModifiers ?? [];
     actor.equipment = (actor.equipment ?? {}) as Loadout;
+
+    // A status that lasts until cured carries Infinity as its remaining
+    // duration, and JSON has no infinity - `JSON.stringify` writes null. Restore
+    // it on the way back in, or `remaining` is a null masquerading as a number:
+    // `Number.isFinite(null)` is false so the tick loop happens to keep the
+    // status forever, but `null - 1` is -1, so the first piece of code that does
+    // arithmetic on it expires a permanent status on the spot.
+    for (const status of actor.statuses) {
+      if (typeof status.remaining !== 'number' || Number.isNaN(status.remaining)) {
+        status.remaining = Number.POSITIVE_INFINITY;
+      }
+    }
   }
 
   out.version = SAVE_VERSION;

@@ -1,0 +1,8 @@
+{
+  "name": "com.aetherlight.core",
+  "version": "0.1.0",
+  "displayName": "Aetherlight Core",
+  "description": "Engine-agnostic rules core for a classic-style elemental JRPG. No UnityEngine dependency.",
+  "unity": "2021.3",
+  "author": { "name": "Aetherlight contributors" }
+}

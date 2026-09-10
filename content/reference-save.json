@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "packs": [
+    "starter"
+  ],
+  "savedAt": "2026-01-01T00:00:00.000Z",
+  "playTimeSeconds": 7384,
+  "party": [
+    {
+      "id": "rell",
+      "defId": "rell",
+      "level": 14,
+      "xp": 5200,
+      "hp": 118,
+      "aether": 24,
+      "motes": [
+        {
+          "defId": "boulder",
+          "state": "set",
+          "recoveryLeft": 0
+        },
+        {
+          "defId": "cinder",
+          "state": "standby",
+          "recoveryLeft": 0
+        },
+        {
+          "defId": "loam",
+          "state": "recovering",
+          "recoveryLeft": 2
+        }
+      ],
+      "equipment": {
+        "weapon": "iron-blade",
+        "armor": "warded-mail"
+      },
+      "statuses": [
+        {
+          "statusId": "scorch",
+          "remaining": 2,
+          "sourceId": "foe:ash-wisp:0"
+        },
+        {
+          "statusId": "venom",
+          "remaining": null,
+          "sourceId": null
+        }
+      ],
+      "tempModifiers": []
+    }
+  ],
+  "reserve": [],
+  "inventory": [
+    {
+      "itemId": "oak-shield",
+      "count": 2
+    }
+  ],
+  "coin": 1450,
+  "looseMotes": [
+    "zephyr",
+    "brine"
+  ],
+  "location": {
+    "mapId": "overworld",
+    "position": {
+      "x": 12,
+      "y": 7
+    },
+    "facing": "south"
+  },
+  "flags": {
+    "metTheGuide": true,
+    "chapter": 3,
+    "lastInn": "riverside"
+  }
+}

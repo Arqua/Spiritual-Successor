@@ -1,0 +1,77 @@
+counts actors=4 arts=17 classes=8 enemies=3 gear=8 motes=8 statuses=6 summons=4
+ids.actors kite,maren,rell,sunna
+ids.arts ember,frostbite,gale-cut,glacial-burst,glaciate,greater-mend,guard-sigil,heave,kindle,mend,pyre-wave,quake,quicken,rally,siphon,stone-fist,updraft
+ids.classes ashwarden,equinox,geomancer,pyromancer,stormcaller,stormwright,tidecaller,wanderer
+ids.motes boulder,brine,cinder,flare,hoarfrost,loam,squall,zephyr
+ids.statuses bulwark,haste,hush,rime-bind,scorch,venom
+ids.summons conflagrant,stonewarden,tempest-herald,worldsong
+ids.gear clarity-charm,ember-brand,gale-edge,iron-blade,leather-vest,oak-shield,travel-hood,warded-mail
+ids.enemies ash-wisp,hollow-sentinel,thicket-crawler
+actor.kite.L1 hp=44.000000 aether=28.000000 atk=14.000000 def=9.000000 agi=18.000000 luck=9.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.kite.L12 hp=104.000000 aether=67.000000 atk=28.000000 def=17.000000 agi=32.000000 luck=13.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.kite.L40 hp=271.000000 aether=169.000000 atk=63.000000 def=37.000000 agi=67.000000 luck=25.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.maren.L1 hp=46.000000 aether=34.000000 atk=12.000000 def=11.000000 agi=12.000000 luck=7.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.maren.L12 hp=109.000000 aether=81.000000 atk=24.000000 def=21.000000 agi=21.000000 luck=11.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.maren.L40 hp=283.000000 aether=205.000000 atk=54.000000 def=45.000000 agi=45.000000 luck=23.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.rell.L1 hp=58.000000 aether=22.000000 atk=16.000000 def=14.000000 agi=11.000000 luck=6.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.rell.L12 hp=137.000000 aether=52.000000 atk=32.000000 def=26.000000 agi=19.000000 luck=10.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.rell.L40 hp=357.000000 aether=133.000000 atk=72.000000 def=58.000000 agi=41.000000 luck=22.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.sunna.L1 hp=48.000000 aether=30.000000 atk=18.000000 def=10.000000 agi=13.000000 luck=5.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.sunna.L12 hp=113.000000 aether=72.000000 atk=36.000000 def=19.000000 agi=23.000000 luck=9.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+actor.sunna.L40 hp=295.000000 aether=181.000000 atk=81.000000 def=41.000000 agi=48.000000 luck=21.000000 power[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000] resist[terra=0.000000 pyre=0.000000 aeris=0.000000 rime=0.000000]
+class.kite.none wanderer
+class.kite.terra1 wanderer
+class.kite.terra2 wanderer
+class.kite.terra1pyre1 wanderer
+class.kite.aeris1rime1 stormwright
+class.kite.allfour equinox
+class.maren.none wanderer
+class.maren.terra1 wanderer
+class.maren.terra2 wanderer
+class.maren.terra1pyre1 wanderer
+class.maren.aeris1rime1 stormwright
+class.maren.allfour equinox
+class.rell.none wanderer
+class.rell.terra1 geomancer
+class.rell.terra2 geomancer
+class.rell.terra1pyre1 ashwarden
+class.rell.aeris1rime1 wanderer
+class.rell.allfour equinox
+class.sunna.none wanderer
+class.sunna.terra1 wanderer
+class.sunna.terra2 wanderer
+class.sunna.terra1pyre1 wanderer
+class.sunna.aeris1rime1 wanderer
+class.sunna.allfour equinox
+art.ember cost=5.000000 power=34.000000 hits=1 kind=aetheric targeting=one-foe element=pyre priority=0 statuses=scorch:0.300000
+art.frostbite cost=7.000000 power=36.000000 hits=1 kind=aetheric targeting=one-foe element=rime priority=0 statuses=rime-bind:0.250000
+art.gale-cut cost=6.000000 power=30.000000 hits=2 kind=aetheric targeting=one-foe element=aeris priority=1 statuses=-
+art.glacial-burst cost=18.000000 power=62.000000 hits=1 kind=aetheric targeting=all-foes element=rime priority=0 statuses=rime-bind:0.150000
+art.glaciate cost=0.000000 power=0.000000 hits=1 kind=field targeting=self element=rime priority=0 statuses=-
+art.greater-mend cost=16.000000 power=55.000000 hits=1 kind=heal targeting=all-allies element=rime priority=0 statuses=-
+art.guard-sigil cost=10.000000 power=0.000000 hits=1 kind=support targeting=all-allies element=terra priority=0 statuses=-
+art.heave cost=0.000000 power=0.000000 hits=1 kind=field targeting=self element=terra priority=0 statuses=-
+art.kindle cost=0.000000 power=0.000000 hits=1 kind=field targeting=self element=pyre priority=0 statuses=-
+art.mend cost=6.000000 power=40.000000 hits=1 kind=heal targeting=one-ally element=rime priority=0 statuses=-
+art.pyre-wave cost=14.000000 power=48.000000 hits=1 kind=aetheric targeting=spread-foes element=pyre priority=0 statuses=-
+art.quake cost=12.000000 power=42.000000 hits=1 kind=aetheric targeting=all-foes element=terra priority=0 statuses=-
+art.quicken cost=8.000000 power=0.000000 hits=1 kind=support targeting=one-ally element=aeris priority=0 statuses=haste:1.000000
+art.rally cost=18.000000 power=0.000000 hits=1 kind=heal targeting=downed-ally element=terra priority=0 statuses=-
+art.siphon cost=9.000000 power=28.000000 hits=1 kind=aetheric targeting=one-foe element=terra priority=0 statuses=-
+art.stone-fist cost=4.000000 power=1.400000 hits=1 kind=physical targeting=one-foe element=terra priority=0 statuses=-
+art.updraft cost=0.000000 power=0.000000 hits=1 kind=field targeting=self element=aeris priority=0 statuses=-
+enemy.ash-wisp hp=52.000000 aether=40.000000 atk=16.000000 def=8.000000 agi=18.000000 luck=6.000000 xp=30 coin=22 moves=2
+enemy.hollow-sentinel hp=1400.000000 aether=260.000000 atk=74.000000 def=44.000000 agi=26.000000 luck=12.000000 xp=260 coin=300 moves=4
+enemy.thicket-crawler hp=70.000000 aether=0.000000 atk=22.000000 def=12.000000 agi=10.000000 luck=3.000000 xp=24 coin=18 moves=1
+summon.conflagrant base=110.000000 perMote=0.050000 cap=0.220000 hitsAll=true cost[terra=0 pyre=2 aeris=0 rime=0]
+summon.stonewarden base=90.000000 perMote=0.040000 cap=0.200000 hitsAll=false cost[terra=2 pyre=0 aeris=0 rime=0]
+summon.tempest-herald base=140.000000 perMote=0.050000 cap=0.250000 hitsAll=true cost[terra=0 pyre=0 aeris=2 rime=1]
+summon.worldsong base=320.000000 perMote=0.050000 cap=0.400000 hitsAll=true cost[terra=2 pyre=2 aeris=2 rime=2]
+mote.boulder element=terra effect=damage power=30.000000 targeting=one-foe recovery=3
+mote.brine element=rime effect=restore-aether power=0.000000 targeting=one-ally recovery=3
+mote.cinder element=pyre effect=damage power=38.000000 targeting=one-foe recovery=3
+mote.flare element=pyre effect=status power=0.000000 targeting=all-foes recovery=3
+mote.hoarfrost element=rime effect=heal power=45.000000 targeting=all-allies recovery=3
+mote.loam element=terra effect=buff power=0.000000 targeting=all-allies recovery=3
+mote.squall element=aeris effect=damage power=34.000000 targeting=all-foes recovery=3
+mote.zephyr element=aeris effect=buff power=0.000000 targeting=all-allies recovery=3

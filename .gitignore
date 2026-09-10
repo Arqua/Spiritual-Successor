@@ -6,3 +6,29 @@ coverage/
 
 # Generated demo bundle (npm run demo)
 demo/bundle.js
+
+# --- Unity ---
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+*.user
+*.unityproj
+
+# Unity regenerates these inside the Unity project from the asmdefs, so they
+# are noise. The hand-authored project files under unity/Aetherlight.Core*
+# are real source - without them `dotnet test` does not work on a fresh clone -
+# so they are re-included below.
+*.csproj
+*.sln
+!unity/Aetherlight.Core/Aetherlight.Core.csproj
+!unity/Aetherlight.Core.Tests/Aetherlight.Core.Tests.csproj
+sysinfo.txt
+crashlytics-build.properties
+
+# --- .NET build output (redirected here by unity/Directory.Build.props) ---
+unity/build/
