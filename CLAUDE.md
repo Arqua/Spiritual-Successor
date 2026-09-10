@@ -13,7 +13,7 @@ demo/                    browser demo driving the TypeScript core
 ## Verify before you claim
 
 ```bash
-npm test                                   # 130 TypeScript tests
+npm test                                   # 142 TypeScript tests
 npm run typecheck                          # core (DOM-free) + browser configs
 cd unity/Aetherlight.Core.Tests && dotnet test   # 132 C# tests
 ```
