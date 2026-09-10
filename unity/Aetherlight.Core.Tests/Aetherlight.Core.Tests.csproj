@@ -26,6 +26,7 @@
   <ItemGroup>
     <None Include="../../content/starter.json" Link="content/starter.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../content/starter.fingerprint.txt" Link="content/starter.fingerprint.txt" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../content/reference-save.json" Link="content/reference-save.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

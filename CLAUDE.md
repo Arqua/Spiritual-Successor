@@ -14,7 +14,7 @@ demo/                    browser demo driving the TypeScript core
 ```bash
 npm test                                   # 130 TypeScript tests
 npm run typecheck                          # core (DOM-free) + browser configs
-cd unity/Aetherlight.Core.Tests && dotnet test   # 80 C# tests
+cd unity/Aetherlight.Core.Tests && dotnet test   # 132 C# tests
 ```
 
 Both typechecks must pass. `tsconfig.json` compiles the core **without** the DOM

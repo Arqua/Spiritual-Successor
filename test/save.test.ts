@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { ContentRegistry } from '../src/core/registry.js';
 import { starterPack } from '../src/data/starterPack.js';
@@ -73,5 +75,48 @@ describe('save files', () => {
     expect(migrated.party[0]!.statuses).toEqual([]);
     expect(migrated.inventory).toEqual([]);
     expect(migrated.flags).toEqual({});
+  });
+});
+
+describe('durations that outlive a save', () => {
+  it('restores an unlimited duration rather than leaving a null behind', () => {
+    // JSON has no infinity, so a status that lasts until cured serializes as
+    // null. Loading must turn it back into a number: `null` passes the
+    // isFinite check by accident, but `null - 1` is -1, so any arithmetic
+    // expires a permanent status immediately.
+    const rell = createActorState(registry.actorDef('rell')!, 8, ctx);
+    rell.statuses = [{ statusId: 'venom', remaining: Number.POSITIVE_INFINITY, sourceId: null }];
+
+    const save = createSave({
+      packs: ['starter'],
+      party: [rell],
+      location: { mapId: 'x', position: { x: 0, y: 0 }, facing: 'north' },
+    });
+
+    const restored = deserialize(serialize(save));
+    const venom = restored.party[0]!.statuses[0]!;
+
+    expect(typeof venom.remaining).toBe('number');
+    expect(venom.remaining).toBe(Number.POSITIVE_INFINITY);
+    expect(venom.remaining - 1).toBe(Number.POSITIVE_INFINITY);
+  });
+
+  it('keeps a finite duration finite', () => {
+    const rell = createActorState(registry.actorDef('rell')!, 8, ctx);
+    rell.statuses = [{ statusId: 'scorch', remaining: 3, sourceId: null }];
+    const save = createSave({
+      packs: ['starter'],
+      party: [rell],
+      location: { mapId: 'x', position: { x: 0, y: 0 }, facing: 'north' },
+    });
+    expect(deserialize(serialize(save)).party[0]!.statuses[0]!.remaining).toBe(3);
+  });
+
+  it('loads the shared reference save the C# tests also read', () => {
+    const save = deserialize(readFileSync(resolve(process.cwd(), 'content/reference-save.json'), 'utf8'));
+    expect(save.party[0]!.level).toBe(14);
+    expect(save.coin).toBe(1450);
+    expect(save.party[0]!.motes.find((m) => m.defId === 'cinder')?.state).toBe('standby');
+    expect(save.party[0]!.statuses.find((s) => s.statusId === 'venom')?.remaining).toBe(Number.POSITIVE_INFINITY);
   });
 });

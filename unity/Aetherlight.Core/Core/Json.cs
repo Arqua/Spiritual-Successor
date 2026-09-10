@@ -18,8 +18,9 @@ namespace Aetherlight.Core
     /// hundred lines against a fully specified grammar, and it keeps the core
     /// dependency-free on every platform Unity targets.
     ///
-    /// Scope: parsing only. Nothing here writes JSON, because the TypeScript
-    /// side owns producing the canonical file.
+    /// Scope: parsing, plus the small writer below. Content packs are only
+    /// ever read here - the TypeScript side owns producing the canonical file -
+    /// but save games have to be written too, and a save has no other author.
     /// </summary>
     public sealed class JsonValue
     {
@@ -95,6 +96,149 @@ namespace Aetherlight.Core
         public int Position { get; }
         public int Line { get; }
         public int Column { get; }
+    }
+
+    /// <summary>
+    /// Minimal JSON writer, for the one thing that must be written: save games.
+    ///
+    /// Numbers use the round-trip format so a double survives being written and
+    /// read back; anything less loses precision silently, and a save that
+    /// degrades a little on each load is a miserable bug to trace.
+    /// </summary>
+    public sealed class JsonWriter
+    {
+        private readonly StringBuilder _builder = new StringBuilder();
+        private readonly Stack<bool> _firstMember = new Stack<bool>();
+
+        public JsonWriter BeginObject()
+        {
+            Separate();
+            _builder.Append('{');
+            _firstMember.Push(true);
+            return this;
+        }
+
+        public JsonWriter EndObject()
+        {
+            _builder.Append('}');
+            _firstMember.Pop();
+            return this;
+        }
+
+        public JsonWriter BeginArray()
+        {
+            Separate();
+            _builder.Append('[');
+            _firstMember.Push(true);
+            return this;
+        }
+
+        public JsonWriter EndArray()
+        {
+            _builder.Append(']');
+            _firstMember.Pop();
+            return this;
+        }
+
+        public JsonWriter Name(string name)
+        {
+            Separate();
+            WriteEscaped(name);
+            _builder.Append(':');
+            // The value that follows is part of this member, not a new one.
+            _firstMember.Pop();
+            _firstMember.Push(false);
+            _suppressSeparator = true;
+            return this;
+        }
+
+        public JsonWriter Value(string? value)
+        {
+            Separate();
+            if (value == null) _builder.Append("null");
+            else WriteEscaped(value);
+            return this;
+        }
+
+        public JsonWriter Value(double value)
+        {
+            Separate();
+            if (double.IsNaN(value) || double.IsInfinity(value)) _builder.Append('0');
+            else _builder.Append(value.ToString("R", CultureInfo.InvariantCulture));
+            return this;
+        }
+
+        public JsonWriter Value(long value)
+        {
+            Separate();
+            _builder.Append(value.ToString(CultureInfo.InvariantCulture));
+            return this;
+        }
+
+        public JsonWriter Value(bool value)
+        {
+            Separate();
+            _builder.Append(value ? "true" : "false");
+            return this;
+        }
+
+        public JsonWriter Null()
+        {
+            Separate();
+            _builder.Append("null");
+            return this;
+        }
+
+        public JsonWriter Member(string name, string? value) => Name(name).Value(value);
+        public JsonWriter Member(string name, double value) => Name(name).Value(value);
+        public JsonWriter Member(string name, long value) => Name(name).Value(value);
+        public JsonWriter Member(string name, bool value) => Name(name).Value(value);
+
+        private bool _suppressSeparator;
+
+        private void Separate()
+        {
+            if (_suppressSeparator)
+            {
+                _suppressSeparator = false;
+                return;
+            }
+            if (_firstMember.Count == 0) return;
+            if (_firstMember.Peek())
+            {
+                _firstMember.Pop();
+                _firstMember.Push(false);
+            }
+            else
+            {
+                _builder.Append(',');
+            }
+        }
+
+        private void WriteEscaped(string value)
+        {
+            _builder.Append('"');
+            foreach (char c in value)
+            {
+                switch (c)
+                {
+                    case '"': _builder.Append("\\\""); break;
+                    case '\\': _builder.Append("\\\\"); break;
+                    case '\n': _builder.Append("\\n"); break;
+                    case '\r': _builder.Append("\\r"); break;
+                    case '\t': _builder.Append("\\t"); break;
+                    case '\b': _builder.Append("\\b"); break;
+                    case '\f': _builder.Append("\\f"); break;
+                    default:
+                        if (c < 0x20) _builder.Append("\\u").Append(((int)c).ToString("x4", CultureInfo.InvariantCulture));
+                        else _builder.Append(c);
+                        break;
+                }
+            }
+            _builder.Append('"');
+        }
+
+        public override string ToString() => _builder.ToString();
     }
 
     internal sealed class JsonParser
