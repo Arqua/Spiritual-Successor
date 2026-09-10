@@ -36,6 +36,7 @@ namespace Aetherlight.Domain
     {
         public string Id = "";
         public string Name = "";
+        public string? Description;
         /// <summary>Innate elements this class is available to. Empty means any.</summary>
         public List<Element> Innate = new List<Element>();
         public ClassRequirement Requires = new ClassRequirement();

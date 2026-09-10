@@ -26,7 +26,9 @@
     "test:watch": "vitest",
     "sim": "tsx tools/sim.ts",
     "schema": "tsx tools/emit-schema.ts",
-    "demo": "esbuild demo/main.ts --bundle --format=esm --outfile=demo/bundle.js && echo \"open demo/index.html\""
+    "demo": "esbuild demo/main.ts --bundle --format=esm --outfile=demo/bundle.js && echo \"open demo/index.html\"",
+    "content:export": "tsx tools/export-content.ts",
+    "content:fingerprint": "tsx tools/content-fingerprint.ts > content/starter.fingerprint.txt && echo \"wrote content/starter.fingerprint.txt\""
   },
   "devDependencies": {
     "@types/node": "^22.20.2",

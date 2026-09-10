@@ -17,4 +17,15 @@
     <ProjectReference Include="../Aetherlight.Core/Aetherlight.Core.csproj" />
   </ItemGroup>
 
+  <!--
+    The canonical content and its fingerprint are the shared fixtures both
+    implementations read, so copy them next to the test assembly rather than
+    reaching up the tree at runtime with a path that breaks under a different
+    working directory.
+  -->
+  <ItemGroup>
+    <None Include="../../content/starter.json" Link="content/starter.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../content/starter.fingerprint.txt" Link="content/starter.fingerprint.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

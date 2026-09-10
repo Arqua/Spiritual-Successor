@@ -14,7 +14,7 @@ demo/                    browser demo driving the TypeScript core
 ```bash
 npm test                                   # 130 TypeScript tests
 npm run typecheck                          # core (DOM-free) + browser configs
-cd unity/Aetherlight.Core.Tests && dotnet test   # 54 C# tests
+cd unity/Aetherlight.Core.Tests && dotnet test   # 57 C# tests
 ```
 
 Both typechecks must pass. `tsconfig.json` compiles the core **without** the DOM
@@ -24,6 +24,14 @@ layers. If you need a DOM type, it belongs in `src/presentation/renderer/`.
 Do not pipe a compiler through `head` and then `&& echo OK` - `head`'s exit
 status masks the compiler's, and it will report success over a failure. Check
 the exit code.
+
+## Content is shared, not duplicated
+
+`content/starter.json` is the canonical pack and both implementations read it.
+It is generated from `src/data/starterPack.ts` - after editing content run
+`npm run content:export` and `npm run content:fingerprint`, and commit the
+regenerated files with the change. `ContentParityTests` fails if the two sides
+stop agreeing about what the content means.
 
 ## The two implementations must agree
 

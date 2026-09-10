@@ -85,11 +85,13 @@ the generator deliberately, and change both sides in the same commit.
 
 ## What is ported, and what is not
 
-Ported and tested (54 tests):
+Ported and tested (57 tests):
 
 - `Core/Rng.cs` - bit-exact with the TypeScript generator
 - `Core/Events.cs` - the event stream, as a class hierarchy
 - `Core/Registry.cs` - content packs, merging, cross-reference validation
+- `Core/Json.cs` - a dependency-free JSON parser
+- `Core/ContentLoader.cs` - canonical pack JSON into definitions
 - `Domain/Elements.cs` - affinity maths, opposed pairs, element tables
 - `Domain/Stats.cs` - stat blocks, modifiers, growth curves, XP
 - `Domain/Motes.cs` - the set/standby/recovering cycle and mote effects
@@ -108,9 +110,7 @@ Not yet ported:
 - `Field/` - grid, interactables, field abilities
 - `Presentation/` - timeline and playback (the canvas renderer is web-only and
   should be replaced by a Unity renderer, not ported)
-- Save serialization, and loading content packs from JSON on disk. The
-  registry and every definition type exist; what is missing is the reader that
-  turns a JSON pack into them.
+- Save serialization.
 
 Port in dependency order, and port each module's TypeScript test alongside it.
 The suites in `test/` are written as specifications rather than for coverage:
@@ -119,3 +119,32 @@ faithful.
 
 Content packs stay JSON so both implementations read identical data - port the
 *rules*, never the content.
+
+## Content is shared, not ported
+
+`content/starter.json` is the canonical pack. Both implementations read it:
+TypeScript through `src/data/loadPack.ts`, C# through
+`Core/ContentLoader.cs`. The C# reader is hand-rolled against a small
+dependency-free JSON parser (`Core/Json.cs`) rather than taking Newtonsoft,
+so the package still works by dropping the folder into a project; Unity's own
+`JsonUtility` cannot express the shapes packs use - dictionaries keyed by
+element, absent-versus-zero optional numbers, or a tagged union like a mote
+effect.
+
+The JSON is generated from the authored TypeScript pack:
+
+```bash
+npm run content:export        # starterPack.ts -> content/starter.json
+npm run content:fingerprint   # regenerate the parity fixture
+```
+
+`ContentParityTests` recomputes, on the C# side, the fingerprint that
+`tools/content-fingerprint.ts` produces on the TypeScript side, and asserts
+they match line for line. The fingerprint covers more than the parse: stat
+curves at three levels, class resolution across six mote spreads, and the
+numbers on every art, enemy, summon and mote. Identical parsing is necessary
+but not sufficient - what matters is that both engines *behave* the same on
+the same content, and derivation is where a port drifts silently.
+
+After editing content, run both commands and commit the regenerated files
+alongside the change.

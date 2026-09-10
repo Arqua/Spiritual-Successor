@@ -1,0 +1,1203 @@
+{
+  "actors": [
+    {
+      "baseArts": [
+        "stone-fist",
+        "heave"
+      ],
+      "growth": {
+        "agility": {
+          "base": 11,
+          "gain": 0.77
+        },
+        "attack": {
+          "base": 16,
+          "gain": 1.44
+        },
+        "defense": {
+          "base": 14,
+          "gain": 1.12
+        },
+        "luck": {
+          "base": 6,
+          "gain": 0.4
+        },
+        "maxAether": {
+          "base": 22,
+          "curve": 1.02,
+          "gain": 2.6399999999999997
+        },
+        "maxHp": {
+          "base": 58,
+          "curve": 1.05,
+          "gain": 6.38
+        }
+      },
+      "id": "rell",
+      "innate": "terra",
+      "name": "Rell",
+      "spriteId": "rell"
+    },
+    {
+      "baseArts": [
+        "ember",
+        "kindle"
+      ],
+      "growth": {
+        "agility": {
+          "base": 13,
+          "gain": 0.9100000000000001
+        },
+        "attack": {
+          "base": 18,
+          "gain": 1.6199999999999999
+        },
+        "defense": {
+          "base": 10,
+          "gain": 0.8
+        },
+        "luck": {
+          "base": 5,
+          "gain": 0.4
+        },
+        "maxAether": {
+          "base": 30,
+          "curve": 1.02,
+          "gain": 3.5999999999999996
+        },
+        "maxHp": {
+          "base": 48,
+          "curve": 1.05,
+          "gain": 5.28
+        }
+      },
+      "id": "sunna",
+      "innate": "pyre",
+      "name": "Sunna",
+      "spriteId": "sunna"
+    },
+    {
+      "baseArts": [
+        "gale-cut",
+        "updraft"
+      ],
+      "growth": {
+        "agility": {
+          "base": 18,
+          "gain": 1.2600000000000002
+        },
+        "attack": {
+          "base": 14,
+          "gain": 1.26
+        },
+        "defense": {
+          "base": 9,
+          "gain": 0.72
+        },
+        "luck": {
+          "base": 9,
+          "gain": 0.4
+        },
+        "maxAether": {
+          "base": 28,
+          "curve": 1.02,
+          "gain": 3.36
+        },
+        "maxHp": {
+          "base": 44,
+          "curve": 1.05,
+          "gain": 4.84
+        }
+      },
+      "id": "kite",
+      "innate": "aeris",
+      "name": "Kite",
+      "spriteId": "kite"
+    },
+    {
+      "baseArts": [
+        "mend",
+        "glaciate"
+      ],
+      "growth": {
+        "agility": {
+          "base": 12,
+          "gain": 0.8400000000000001
+        },
+        "attack": {
+          "base": 12,
+          "gain": 1.08
+        },
+        "defense": {
+          "base": 11,
+          "gain": 0.88
+        },
+        "luck": {
+          "base": 7,
+          "gain": 0.4
+        },
+        "maxAether": {
+          "base": 34,
+          "curve": 1.02,
+          "gain": 4.08
+        },
+        "maxHp": {
+          "base": 46,
+          "curve": 1.05,
+          "gain": 5.06
+        }
+      },
+      "id": "maren",
+      "innate": "rime",
+      "name": "Maren",
+      "spriteId": "maren"
+    }
+  ],
+  "arts": [
+    {
+      "cost": 4,
+      "effect": {
+        "power": 1.4
+      },
+      "element": "terra",
+      "id": "stone-fist",
+      "kind": "physical",
+      "name": "Stone Fist",
+      "targeting": "one-foe"
+    },
+    {
+      "cost": 12,
+      "effect": {
+        "power": 42
+      },
+      "element": "terra",
+      "id": "quake",
+      "kind": "aetheric",
+      "name": "Quake",
+      "targeting": "all-foes"
+    },
+    {
+      "cost": 5,
+      "effect": {
+        "power": 34,
+        "statuses": [
+          {
+            "chance": 0.3,
+            "statusId": "scorch"
+          }
+        ]
+      },
+      "element": "pyre",
+      "id": "ember",
+      "kind": "aetheric",
+      "name": "Ember",
+      "targeting": "one-foe"
+    },
+    {
+      "cost": 14,
+      "effect": {
+        "power": 48,
+        "spreadFalloff": 0.35
+      },
+      "element": "pyre",
+      "id": "pyre-wave",
+      "kind": "aetheric",
+      "name": "Pyre Wave",
+      "targeting": "spread-foes"
+    },
+    {
+      "cost": 6,
+      "effect": {
+        "hits": 2,
+        "power": 30
+      },
+      "element": "aeris",
+      "id": "gale-cut",
+      "kind": "aetheric",
+      "name": "Gale Cut",
+      "priority": 1,
+      "targeting": "one-foe"
+    },
+    {
+      "cost": 8,
+      "effect": {
+        "statuses": [
+          {
+            "chance": 1,
+            "statusId": "haste"
+          }
+        ]
+      },
+      "element": "aeris",
+      "id": "quicken",
+      "kind": "support",
+      "name": "Quicken",
+      "targeting": "one-ally"
+    },
+    {
+      "cost": 7,
+      "effect": {
+        "power": 36,
+        "statuses": [
+          {
+            "chance": 0.25,
+            "statusId": "rime-bind"
+          }
+        ]
+      },
+      "element": "rime",
+      "id": "frostbite",
+      "kind": "aetheric",
+      "name": "Frostbite",
+      "targeting": "one-foe"
+    },
+    {
+      "cost": 18,
+      "effect": {
+        "power": 62,
+        "statuses": [
+          {
+            "chance": 0.15,
+            "statusId": "rime-bind"
+          }
+        ]
+      },
+      "element": "rime",
+      "id": "glacial-burst",
+      "kind": "aetheric",
+      "name": "Glacial Burst",
+      "targeting": "all-foes"
+    },
+    {
+      "cost": 6,
+      "effect": {
+        "power": 40
+      },
+      "element": "rime",
+      "id": "mend",
+      "kind": "heal",
+      "name": "Mend",
+      "targeting": "one-ally",
+      "usableOutOfBattle": true
+    },
+    {
+      "cost": 16,
+      "effect": {
+        "healFraction": 0.1,
+        "power": 55
+      },
+      "element": "rime",
+      "id": "greater-mend",
+      "kind": "heal",
+      "name": "Greater Mend",
+      "targeting": "all-allies",
+      "usableOutOfBattle": true
+    },
+    {
+      "cost": 18,
+      "effect": {
+        "reviveFraction": 0.5
+      },
+      "element": "terra",
+      "id": "rally",
+      "kind": "heal",
+      "name": "Rally",
+      "targeting": "downed-ally",
+      "usableOutOfBattle": true
+    },
+    {
+      "cost": 9,
+      "effect": {
+        "drain": 0.4,
+        "power": 28
+      },
+      "element": "terra",
+      "id": "siphon",
+      "kind": "aetheric",
+      "name": "Siphon",
+      "targeting": "one-foe"
+    },
+    {
+      "cost": 10,
+      "effect": {
+        "buff": {
+          "modifier": {
+            "defense": 12
+          },
+          "rounds": 3
+        }
+      },
+      "element": "terra",
+      "id": "guard-sigil",
+      "kind": "support",
+      "name": "Guard Sigil",
+      "targeting": "all-allies"
+    },
+    {
+      "cost": 0,
+      "effect": {},
+      "element": "terra",
+      "fieldEffect": "heave",
+      "fieldOnly": true,
+      "id": "heave",
+      "kind": "field",
+      "name": "Heave",
+      "targeting": "self"
+    },
+    {
+      "cost": 0,
+      "effect": {},
+      "element": "pyre",
+      "fieldEffect": "kindle",
+      "fieldOnly": true,
+      "id": "kindle",
+      "kind": "field",
+      "name": "Kindle",
+      "targeting": "self"
+    },
+    {
+      "cost": 0,
+      "effect": {},
+      "element": "aeris",
+      "fieldEffect": "updraft",
+      "fieldOnly": true,
+      "id": "updraft",
+      "kind": "field",
+      "name": "Updraft",
+      "targeting": "self"
+    },
+    {
+      "cost": 0,
+      "effect": {},
+      "element": "rime",
+      "fieldEffect": "glaciate",
+      "fieldOnly": true,
+      "id": "glaciate",
+      "kind": "field",
+      "name": "Glaciate",
+      "targeting": "self"
+    }
+  ],
+  "classes": [
+    {
+      "arts": [],
+      "description": "No motes bound. Balanced but unremarkable.",
+      "id": "wanderer",
+      "name": "Wanderer",
+      "priority": 0,
+      "requires": {
+        "minTotal": 0
+      },
+      "statMultipliers": {}
+    },
+    {
+      "arts": [
+        {
+          "artId": "stone-fist",
+          "level": 1
+        },
+        {
+          "artId": "guard-sigil",
+          "level": 4
+        },
+        {
+          "artId": "quake",
+          "level": 8
+        }
+      ],
+      "description": "Terra-aligned, holding to their own element.",
+      "id": "geomancer",
+      "innate": [
+        "terra"
+      ],
+      "name": "Geomancer",
+      "priority": 10,
+      "requires": {
+        "maxMotes": {
+          "aeris": 0,
+          "pyre": 0,
+          "rime": 0
+        },
+        "minMotes": {
+          "terra": 1
+        }
+      },
+      "statMultipliers": {
+        "attack": 1.05,
+        "defense": 1.2,
+        "maxHp": 1.15
+      }
+    },
+    {
+      "arts": [
+        {
+          "artId": "stone-fist",
+          "level": 1
+        },
+        {
+          "artId": "ember",
+          "level": 3
+        },
+        {
+          "artId": "pyre-wave",
+          "level": 9
+        }
+      ],
+      "description": "Terra grounded, pyre kindled. Heavy and dangerous.",
+      "id": "ashwarden",
+      "innate": [
+        "terra"
+      ],
+      "name": "Ashwarden",
+      "priority": 20,
+      "requires": {
+        "minMotes": {
+          "pyre": 1,
+          "terra": 1
+        }
+      },
+      "statMultipliers": {
+        "agility": 0.9,
+        "attack": 1.25,
+        "maxHp": 1.2
+      }
+    },
+    {
+      "arts": [
+        {
+          "artId": "ember",
+          "level": 1
+        },
+        {
+          "artId": "pyre-wave",
+          "level": 6
+        }
+      ],
+      "description": "Pure pyre. Fragile, and hits like a collapsing star.",
+      "id": "pyromancer",
+      "innate": [
+        "pyre"
+      ],
+      "name": "Pyromancer",
+      "priority": 10,
+      "requires": {
+        "maxMotes": {
+          "aeris": 0,
+          "rime": 0,
+          "terra": 0
+        },
+        "minMotes": {
+          "pyre": 1
+        }
+      },
+      "statMultipliers": {
+        "attack": 1.2,
+        "defense": 0.85,
+        "maxAether": 1.2
+      }
+    },
+    {
+      "arts": [
+        {
+          "artId": "gale-cut",
+          "level": 1
+        },
+        {
+          "artId": "quicken",
+          "level": 5
+        }
+      ],
+      "description": "Aeris-aligned. First to act, and hard to pin down.",
+      "id": "stormcaller",
+      "innate": [
+        "aeris"
+      ],
+      "name": "Stormcaller",
+      "priority": 10,
+      "requires": {
+        "maxMotes": {
+          "pyre": 0,
+          "rime": 0,
+          "terra": 0
+        },
+        "minMotes": {
+          "aeris": 1
+        }
+      },
+      "statMultipliers": {
+        "agility": 1.3,
+        "maxAether": 1.15,
+        "maxHp": 0.9
+      }
+    },
+    {
+      "arts": [
+        {
+          "artId": "mend",
+          "level": 1
+        },
+        {
+          "artId": "frostbite",
+          "level": 3
+        },
+        {
+          "artId": "greater-mend",
+          "level": 10
+        }
+      ],
+      "description": "Rime-aligned healer.",
+      "id": "tidecaller",
+      "innate": [
+        "rime"
+      ],
+      "name": "Tidecaller",
+      "priority": 10,
+      "requires": {
+        "maxMotes": {
+          "aeris": 0,
+          "pyre": 0,
+          "terra": 0
+        },
+        "minMotes": {
+          "rime": 1
+        }
+      },
+      "statMultipliers": {
+        "attack": 0.9,
+        "defense": 1.05,
+        "maxAether": 1.3
+      }
+    },
+    {
+      "arts": [
+        {
+          "artId": "gale-cut",
+          "level": 1
+        },
+        {
+          "artId": "mend",
+          "level": 2
+        },
+        {
+          "artId": "quicken",
+          "level": 6
+        },
+        {
+          "artId": "greater-mend",
+          "level": 12
+        }
+      ],
+      "description": "Aeris and rime together: speed married to restoration.",
+      "id": "stormwright",
+      "innate": [
+        "aeris",
+        "rime"
+      ],
+      "name": "Stormwright",
+      "priority": 20,
+      "requires": {
+        "minMotes": {
+          "aeris": 1,
+          "rime": 1
+        }
+      },
+      "statMultipliers": {
+        "agility": 1.2,
+        "maxAether": 1.25
+      }
+    },
+    {
+      "arts": [
+        {
+          "artId": "quake",
+          "level": 1
+        },
+        {
+          "artId": "pyre-wave",
+          "level": 1
+        },
+        {
+          "artId": "gale-cut",
+          "level": 1
+        },
+        {
+          "artId": "greater-mend",
+          "level": 1
+        },
+        {
+          "artId": "rally",
+          "level": 5
+        }
+      ],
+      "description": "All four elements bound at once. Rare, and formidable.",
+      "id": "equinox",
+      "name": "Equinox",
+      "priority": 50,
+      "requires": {
+        "minMotes": {
+          "aeris": 1,
+          "pyre": 1,
+          "rime": 1,
+          "terra": 1
+        }
+      },
+      "statMultipliers": {
+        "agility": 1.15,
+        "attack": 1.15,
+        "defense": 1.15,
+        "maxAether": 1.3,
+        "maxHp": 1.15
+      }
+    }
+  ],
+  "enemies": [
+    {
+      "coin": 18,
+      "drops": [
+        {
+          "chance": 0.05,
+          "itemId": "leather-vest"
+        }
+      ],
+      "id": "thicket-crawler",
+      "innate": "terra",
+      "moves": [
+        {
+          "artId": "attack",
+          "weight": 8
+        }
+      ],
+      "name": "Thicket Crawler",
+      "stats": {
+        "agility": 10,
+        "attack": 22,
+        "defense": 12,
+        "luck": 3,
+        "maxAether": 0,
+        "maxHp": 70,
+        "power": {
+          "aeris": 0,
+          "pyre": 0,
+          "rime": 0,
+          "terra": 10
+        },
+        "resist": {
+          "aeris": 0,
+          "pyre": 0,
+          "rime": 8,
+          "terra": 15
+        }
+      },
+      "xp": 24
+    },
+    {
+      "arts": [
+        "ember"
+      ],
+      "coin": 22,
+      "id": "ash-wisp",
+      "innate": "pyre",
+      "moves": [
+        {
+          "artId": "attack",
+          "weight": 4
+        },
+        {
+          "artId": "ember",
+          "weight": 6
+        }
+      ],
+      "name": "Ash Wisp",
+      "stats": {
+        "agility": 18,
+        "attack": 16,
+        "defense": 8,
+        "luck": 6,
+        "maxAether": 40,
+        "maxHp": 52,
+        "power": {
+          "aeris": 0,
+          "pyre": 22,
+          "rime": 0,
+          "terra": 0
+        },
+        "resist": {
+          "aeris": 5,
+          "pyre": 25,
+          "rime": -10,
+          "terra": 0
+        }
+      },
+      "xp": 30
+    },
+    {
+      "arts": [
+        "frostbite",
+        "glacial-burst",
+        "greater-mend"
+      ],
+      "behaviorTag": "boss",
+      "coin": 300,
+      "fleeResistance": 0.4,
+      "id": "hollow-sentinel",
+      "innate": "rime",
+      "moves": [
+        {
+          "artId": "attack",
+          "weight": 5
+        },
+        {
+          "artId": "frostbite",
+          "weight": 4
+        },
+        {
+          "artId": "glacial-burst",
+          "cooldown": 2,
+          "weight": 5
+        },
+        {
+          "artId": "greater-mend",
+          "cooldown": 4,
+          "hpBelow": 0.35,
+          "weight": 3
+        }
+      ],
+      "name": "Hollow Sentinel",
+      "stats": {
+        "agility": 26,
+        "attack": 74,
+        "defense": 44,
+        "luck": 12,
+        "maxAether": 260,
+        "maxHp": 1400,
+        "power": {
+          "aeris": 0,
+          "pyre": 0,
+          "rime": 48,
+          "terra": 0
+        },
+        "resist": {
+          "aeris": 10,
+          "pyre": 0,
+          "rime": 40,
+          "terra": 10
+        }
+      },
+      "xp": 260
+    }
+  ],
+  "fieldAbilities": [
+    {
+      "description": "Lift a loose stone and set it down elsewhere.",
+      "effect": "lift",
+      "element": "terra",
+      "id": "heave",
+      "name": "Heave",
+      "shape": {
+        "kind": "facing"
+      }
+    },
+    {
+      "description": "Burn away brush blocking the way.",
+      "effect": "burn",
+      "element": "pyre",
+      "id": "kindle",
+      "name": "Kindle",
+      "setsTerrain": "ash",
+      "shape": {
+        "kind": "facing"
+      }
+    },
+    {
+      "description": "Raise a column of wind into a step.",
+      "effect": "raise",
+      "element": "aeris",
+      "elevationDelta": 1,
+      "id": "updraft",
+      "name": "Updraft",
+      "shape": {
+        "kind": "facing"
+      }
+    },
+    {
+      "description": "Freeze water into a standable platform.",
+      "effect": "freeze",
+      "element": "rime",
+      "elevationDelta": 0,
+      "id": "glaciate",
+      "name": "Glaciate",
+      "setsTerrain": "ice",
+      "shape": {
+        "kind": "facing"
+      }
+    }
+  ],
+  "gear": [
+    {
+      "id": "iron-blade",
+      "modifier": {
+        "attack": 14
+      },
+      "name": "Iron Blade",
+      "slot": "weapon",
+      "value": 200
+    },
+    {
+      "element": "pyre",
+      "id": "ember-brand",
+      "modifier": {
+        "attack": 22,
+        "power": {
+          "pyre": 10
+        }
+      },
+      "name": "Ember Brand",
+      "proc": {
+        "artId": "ember",
+        "chance": 0.2
+      },
+      "slot": "weapon",
+      "value": 900
+    },
+    {
+      "element": "aeris",
+      "id": "gale-edge",
+      "modifier": {
+        "agility": 8,
+        "attack": 18
+      },
+      "name": "Gale Edge",
+      "proc": {
+        "artId": "gale-cut",
+        "chance": 0.18,
+        "powerScale": 0.8
+      },
+      "slot": "weapon",
+      "value": 850
+    },
+    {
+      "id": "leather-vest",
+      "modifier": {
+        "defense": 10
+      },
+      "name": "Leather Vest",
+      "slot": "armor",
+      "value": 150
+    },
+    {
+      "id": "warded-mail",
+      "modifier": {
+        "defense": 24,
+        "resist": {
+          "pyre": 12,
+          "rime": 12
+        }
+      },
+      "name": "Warded Mail",
+      "slot": "armor",
+      "value": 1100
+    },
+    {
+      "id": "travel-hood",
+      "modifier": {
+        "defense": 5,
+        "luck": 3
+      },
+      "name": "Travel Hood",
+      "slot": "helm",
+      "value": 120
+    },
+    {
+      "id": "oak-shield",
+      "modifier": {
+        "defense": 9
+      },
+      "name": "Oak Shield",
+      "slot": "shield",
+      "value": 180
+    },
+    {
+      "id": "clarity-charm",
+      "modifier": {
+        "maxAether": 15,
+        "resist": {
+          "aeris": 10
+        }
+      },
+      "name": "Clarity Charm",
+      "slot": "trinket",
+      "value": 600
+    }
+  ],
+  "id": "starter",
+  "motes": [
+    {
+      "bonus": {
+        "defense": 4,
+        "maxHp": 12,
+        "power": {
+          "terra": 6
+        }
+      },
+      "effect": {
+        "kind": "damage",
+        "power": 30,
+        "targeting": "one-foe"
+      },
+      "element": "terra",
+      "fieldAbilityId": "heave",
+      "id": "boulder",
+      "name": "Boulder"
+    },
+    {
+      "bonus": {
+        "attack": 3,
+        "maxHp": 9
+      },
+      "effect": {
+        "kind": "buff",
+        "modifier": {
+          "defense": 20
+        },
+        "rounds": 3,
+        "targeting": "all-allies"
+      },
+      "element": "terra",
+      "id": "loam",
+      "name": "Loam"
+    },
+    {
+      "bonus": {
+        "attack": 6,
+        "power": {
+          "pyre": 8
+        }
+      },
+      "effect": {
+        "kind": "damage",
+        "power": 38,
+        "targeting": "one-foe"
+      },
+      "element": "pyre",
+      "fieldAbilityId": "kindle",
+      "id": "cinder",
+      "name": "Cinder"
+    },
+    {
+      "bonus": {
+        "attack": 4,
+        "maxAether": 6
+      },
+      "effect": {
+        "chance": 0.75,
+        "kind": "status",
+        "statusId": "scorch",
+        "targeting": "all-foes"
+      },
+      "element": "pyre",
+      "id": "flare",
+      "name": "Flare"
+    },
+    {
+      "bonus": {
+        "agility": 10,
+        "power": {
+          "aeris": 6
+        }
+      },
+      "effect": {
+        "kind": "buff",
+        "modifier": {
+          "agility": 30
+        },
+        "rounds": 3,
+        "targeting": "all-allies"
+      },
+      "element": "aeris",
+      "fieldAbilityId": "updraft",
+      "id": "zephyr",
+      "name": "Zephyr"
+    },
+    {
+      "bonus": {
+        "agility": 7,
+        "luck": 4
+      },
+      "effect": {
+        "kind": "damage",
+        "power": 34,
+        "targeting": "all-foes"
+      },
+      "element": "aeris",
+      "id": "squall",
+      "name": "Squall"
+    },
+    {
+      "bonus": {
+        "maxAether": 10,
+        "power": {
+          "rime": 7
+        }
+      },
+      "effect": {
+        "kind": "heal",
+        "power": 45,
+        "targeting": "all-allies"
+      },
+      "element": "rime",
+      "fieldAbilityId": "glaciate",
+      "id": "hoarfrost",
+      "name": "Hoarfrost"
+    },
+    {
+      "bonus": {
+        "defense": 3,
+        "maxAether": 8
+      },
+      "effect": {
+        "amount": 20,
+        "kind": "restore-aether",
+        "targeting": "one-ally"
+      },
+      "element": "rime",
+      "id": "brine",
+      "name": "Brine"
+    }
+  ],
+  "statuses": [
+    {
+      "baseResistChance": 0.1,
+      "degenPerRound": 0.06,
+      "description": "Loses health each round.",
+      "duration": {
+        "kind": "battle"
+      },
+      "element": "terra",
+      "id": "venom",
+      "name": "Venom"
+    },
+    {
+      "degenPerRound": 0.04,
+      "description": "Burning; weakens defense and burns each round.",
+      "duration": {
+        "kind": "rounds",
+        "rounds": 3
+      },
+      "element": "pyre",
+      "id": "scorch",
+      "modifier": {
+        "defense": -8
+      },
+      "name": "Scorch"
+    },
+    {
+      "baseResistChance": 0.35,
+      "breaksOnDamage": true,
+      "description": "Frozen solid; cannot act.",
+      "duration": {
+        "kind": "rounds",
+        "rounds": 2
+      },
+      "element": "rime",
+      "exclusiveGroup": "control",
+      "id": "rime-bind",
+      "name": "Rime Bind",
+      "preventsAction": true
+    },
+    {
+      "baseResistChance": 0.25,
+      "description": "Aether is sealed; arts cannot be used.",
+      "duration": {
+        "kind": "rounds",
+        "rounds": 3
+      },
+      "element": "aeris",
+      "id": "hush",
+      "name": "Hush",
+      "preventsArts": true
+    },
+    {
+      "description": "Quickened reflexes.",
+      "duration": {
+        "kind": "rounds",
+        "rounds": 4
+      },
+      "exclusiveGroup": "speed",
+      "id": "haste",
+      "modifier": {
+        "agility": 25
+      },
+      "name": "Haste"
+    },
+    {
+      "description": "Hardened guard.",
+      "duration": {
+        "kind": "rounds",
+        "rounds": 3
+      },
+      "id": "bulwark",
+      "modifier": {
+        "defense": 15
+      },
+      "name": "Bulwark"
+    }
+  ],
+  "summons": [
+    {
+      "afterglowPower": 15,
+      "afterglowRounds": 3,
+      "basePower": 90,
+      "cost": {
+        "terra": 2
+      },
+      "element": "terra",
+      "hpFractionCap": 0.2,
+      "hpFractionPerMote": 0.04,
+      "id": "stonewarden",
+      "name": "Stonewarden"
+    },
+    {
+      "basePower": 110,
+      "cost": {
+        "pyre": 2
+      },
+      "element": "pyre",
+      "hitsAll": true,
+      "hpFractionCap": 0.22,
+      "hpFractionPerMote": 0.05,
+      "id": "conflagrant",
+      "name": "Conflagrant"
+    },
+    {
+      "basePower": 140,
+      "cost": {
+        "aeris": 2,
+        "rime": 1
+      },
+      "element": "aeris",
+      "hitsAll": true,
+      "hpFractionCap": 0.25,
+      "hpFractionPerMote": 0.05,
+      "id": "tempest-herald",
+      "name": "Tempest Herald"
+    },
+    {
+      "afterglowPower": 25,
+      "afterglowRounds": 4,
+      "basePower": 320,
+      "cost": {
+        "aeris": 2,
+        "pyre": 2,
+        "rime": 2,
+        "terra": 2
+      },
+      "element": "terra",
+      "hitsAll": true,
+      "hpFractionCap": 0.4,
+      "hpFractionPerMote": 0.05,
+      "id": "worldsong",
+      "name": "Worldsong"
+    }
+  ],
+  "version": "0.1.0"
+}
