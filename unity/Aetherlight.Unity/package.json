@@ -1,0 +1,11 @@
+{
+  "name": "com.aetherlight.unity",
+  "version": "0.1.0",
+  "displayName": "Aetherlight Unity Renderer",
+  "description": "Unity presentation layer for Aetherlight Core. Consumes the rules layer's event timeline and draws it.",
+  "unity": "2021.3",
+  "dependencies": {
+    "com.aetherlight.core": "0.1.0"
+  },
+  "author": { "name": "Aetherlight contributors" }
+}
