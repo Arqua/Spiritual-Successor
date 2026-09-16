@@ -31,6 +31,15 @@ namespace Aetherlight.Domain
             Resist = Resist.Copy(),
         };
 
+        /// <summary>
+        /// A stat block that contributes nothing.
+        ///
+        /// Used for effects that must not scale off whoever triggered them - an
+        /// item, most obviously. A potion heals the same amount whoever drinks
+        /// it, so the healer being good at healing must not make it better.
+        /// </summary>
+        public static StatBlock Neutral() => new StatBlock().Normalized();
+
         /// <summary>Clamp every stat to a sane floor, so modifiers cannot go negative.</summary>
         public StatBlock Normalized()
         {

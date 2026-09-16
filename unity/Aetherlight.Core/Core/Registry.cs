@@ -21,6 +21,7 @@ namespace Aetherlight.Core
         public List<SummonDef> Summons = new List<SummonDef>();
         public List<StatusDef> Statuses = new List<StatusDef>();
         public List<EnemyDef> Enemies = new List<EnemyDef>();
+        public List<ItemDef> Items = new List<ItemDef>();
     }
 
     public sealed class ValidationIssue
@@ -43,6 +44,7 @@ namespace Aetherlight.Core
         public readonly Dictionary<string, SummonDef> Summons = new Dictionary<string, SummonDef>();
         public readonly Dictionary<string, StatusDef> Statuses = new Dictionary<string, StatusDef>();
         public readonly Dictionary<string, EnemyDef> Enemies = new Dictionary<string, EnemyDef>();
+        public readonly Dictionary<string, ItemDef> Items = new Dictionary<string, ItemDef>();
 
         private readonly List<string> _packs = new List<string>();
         private List<ClassDef> _classList = new List<ClassDef>();
@@ -66,6 +68,7 @@ namespace Aetherlight.Core
             foreach (var entry in pack.Summons) Summons[entry.Id] = entry;
             foreach (var entry in pack.Statuses) Statuses[entry.Id] = entry;
             foreach (var entry in pack.Enemies) Enemies[entry.Id] = entry;
+            foreach (var entry in pack.Items) Items[entry.Id] = entry;
             _packs.Add(pack.Id);
             _classList = new List<ClassDef>(Classes.Values);
             return this;
@@ -78,6 +81,7 @@ namespace Aetherlight.Core
         public SummonDef? SummonDef(string id) => Summons.TryGetValue(id, out var v) ? v : null;
         public StatusDef? StatusDef(string id) => Statuses.TryGetValue(id, out var v) ? v : null;
         public EnemyDef? EnemyDef(string id) => Enemies.TryGetValue(id, out var v) ? v : null;
+        public ItemDef? ItemDef(string id) => Items.TryGetValue(id, out var v) ? v : null;
 
         public IReadOnlyList<ClassDef> ClassDefs => _classList;
 
@@ -111,13 +115,22 @@ namespace Aetherlight.Core
 
             foreach (var gear in Gear.Values) RequireArt(gear.Proc?.ArtId, "gear", gear.Id);
 
+            foreach (var item in Items.Values)
+            {
+                RequireArt(item.ArtId, "item", item.Id);
+                if (item.Kind == ItemKind.Consumable && string.IsNullOrEmpty(item.ArtId))
+                    issues.Add(new ValidationIssue { IsError = false, Entity = "item", Id = item.Id, Message = "consumable does nothing when used" });
+            }
+
             foreach (var enemy in Enemies.Values)
             {
                 foreach (var artId in enemy.Arts) RequireArt(artId, "enemy", enemy.Id);
                 foreach (var drop in enemy.Drops)
                 {
-                    if (!Gear.ContainsKey(drop.ItemId))
-                        issues.Add(new ValidationIssue { IsError = false, Entity = "enemy", Id = enemy.Id, Message = $"drop \"{drop.ItemId}\" is not gear" });
+                    // A drop naming a real item is the common case now that
+                    // items exist; the gear fallback stays for older packs.
+                    if (!Items.ContainsKey(drop.ItemId) && !Gear.ContainsKey(drop.ItemId))
+                        issues.Add(new ValidationIssue { IsError = false, Entity = "enemy", Id = enemy.Id, Message = $"drop \"{drop.ItemId}\" is neither an item nor gear" });
                 }
             }
 

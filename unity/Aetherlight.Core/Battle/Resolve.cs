@@ -138,14 +138,7 @@ namespace Aetherlight.Battle
                     log.Push(new ActionDeclaredEvent { CombatantId = actor.Id, Action = "defend" });
                     break;
                 case CommandKind.Item:
-                    // Items are project-specific; emit the intent and let the
-                    // host game apply its own inventory rules.
-                    log.Push(new ActionDeclaredEvent
-                    {
-                        CombatantId = actor.Id,
-                        Action = $"item:{command.ItemId}",
-                        TargetIds = command.TargetId != null ? new List<string> { command.TargetId } : new List<string>(),
-                    });
+                    DoItem(state, actor, command.ItemId ?? "", command.TargetId, registry, config, log);
                     break;
             }
         }
@@ -220,10 +213,24 @@ namespace Aetherlight.Battle
             ApplyArtToTargets(state, actor, art, targets, registry, config, log, 1);
         }
 
-        private static void ApplyArtToTargets(BattleState state, Combatant actor, ArtDef art, IReadOnlyList<Combatant> targets, ContentRegistry registry, DamageConfig config, EventLog log, double powerScale)
+        /// <summary>
+        /// How an effect resolves when it does not belong to the actor using it.
+        ///
+        /// Items are the case this exists for: the effect must not scale off
+        /// whoever reached into the bag, and it must not be dodged on the
+        /// strength of that person's agility either - a thrown flask does not
+        /// miss because the thrower is slow.
+        /// </summary>
+        private sealed class ApplyOverrides
+        {
+            public StatBlock? Stats;
+            public bool SkipEvasion;
+        }
+
+        private static void ApplyArtToTargets(BattleState state, Combatant actor, ArtDef art, IReadOnlyList<Combatant> targets, ContentRegistry registry, DamageConfig config, EventLog log, double powerScale, ApplyOverrides? overrides = null)
         {
             var primary = targets.Count > 0 ? targets[0] : null;
-            var attackerStats = StatsOf(actor, registry);
+            var attackerStats = overrides?.Stats ?? StatsOf(actor, registry);
 
             foreach (var target in targets)
             {
@@ -243,7 +250,8 @@ namespace Aetherlight.Battle
                 }
 
                 var defenderStats = StatsOf(target, registry);
-                if (Damage.RollEvaded(ref state.Rng, attackerStats, defenderStats, art.Accuracy, config))
+                if (overrides?.SkipEvasion != true
+                    && Damage.RollEvaded(ref state.Rng, attackerStats, defenderStats, art.Accuracy, config))
                 {
                     log.Push(new MissEvent { SourceId = actor.Id, TargetId = target.Id });
                     continue;
@@ -486,6 +494,80 @@ namespace Aetherlight.Battle
                 modifier.Power[summon.Element] = summon.AfterglowPower;
                 ApplyBuff(actor, modifier, summon.AfterglowRounds, log);
             }
+        }
+
+        /// <summary>
+        /// Use an item.
+        ///
+        /// An item is a delivery mechanism for an art: it names one, supplies
+        /// its own power, and resolves through the same path a cast ability
+        /// takes. The differences are that it costs no aether, it does not
+        /// scale off the user, and it is consumed whether or not the effect
+        /// achieves anything - drinking a potion at full health still empties
+        /// the bottle.
+        /// </summary>
+        private static void DoItem(BattleState state, Combatant actor, string itemId, string? targetId, ContentRegistry registry, DamageConfig config, EventLog log)
+        {
+            var item = registry.ItemDef(itemId);
+            if (item == null)
+            {
+                log.Push(new TurnSkippedEvent { CombatantId = actor.Id, Reason = "unknown-item" });
+                return;
+            }
+            if (!Inventories.IsUsable(item, inBattle: true))
+            {
+                log.Push(new TurnSkippedEvent { CombatantId = actor.Id, Reason = "item-not-usable" });
+                return;
+            }
+            if (!Inventories.Has(state.Inventory, itemId))
+            {
+                log.Push(new TurnSkippedEvent { CombatantId = actor.Id, Reason = "item-missing" });
+                return;
+            }
+
+            var baseArt = registry.ArtDef(item.ArtId ?? "");
+            if (baseArt == null)
+            {
+                log.Push(new TurnSkippedEvent { CombatantId = actor.Id, Reason = "unknown-item" });
+                return;
+            }
+
+            // The item's own numbers replace the art's, since an art is
+            // balanced around a caster's stats and an item is not.
+            var art = new ArtDef
+            {
+                Id = baseArt.Id,
+                Name = baseArt.Name,
+                Element = baseArt.Element,
+                Kind = baseArt.Kind,
+                Targeting = item.Targeting ?? baseArt.Targeting,
+                Cost = 0,
+                Priority = baseArt.Priority,
+                Accuracy = baseArt.Accuracy,
+                Effect = new ArtEffect
+                {
+                    Power = item.Power ?? baseArt.Effect.Power,
+                    Hits = baseArt.Effect.Hits,
+                    SpreadFalloff = baseArt.Effect.SpreadFalloff,
+                    Statuses = baseArt.Effect.Statuses,
+                    Buff = baseArt.Effect.Buff,
+                    Drain = baseArt.Effect.Drain,
+                    HealFraction = baseArt.Effect.HealFraction,
+                    ReviveFraction = baseArt.Effect.ReviveFraction,
+                    RestoreAether = baseArt.Effect.RestoreAether,
+                },
+            };
+
+            bool consumed = item.ConsumedOnUse;
+            if (consumed) Inventories.Remove(state.Inventory, itemId, 1);
+
+            var targets = SelectTargets(state, actor, art, targetId);
+            var used = new ItemUsedEvent { CombatantId = actor.Id, ItemId = itemId, Consumed = consumed };
+            foreach (var t in targets) used.TargetIds.Add(t.Id);
+            log.Push(used);
+
+            ApplyArtToTargets(state, actor, art, targets, registry, config, log, 1,
+                new ApplyOverrides { Stats = StatBlock.Neutral(), SkipEvasion = true });
         }
 
         private static void DoFlee(BattleState state, Combatant actor, ContentRegistry registry, EventLog log)

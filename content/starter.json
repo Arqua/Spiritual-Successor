@@ -335,6 +335,41 @@
     },
     {
       "cost": 0,
+      "effect": {
+        "power": 0,
+        "restoreAether": 30
+      },
+      "element": "rime",
+      "id": "renew",
+      "kind": "heal",
+      "name": "Renew",
+      "targeting": "one-ally",
+      "usableOutOfBattle": true
+    },
+    {
+      "cost": 8,
+      "effect": {
+        "power": 0,
+        "statuses": [
+          {
+            "chance": 1,
+            "statusId": "venom"
+          },
+          {
+            "chance": 1,
+            "statusId": "scorch"
+          }
+        ]
+      },
+      "element": "rime",
+      "id": "purge",
+      "kind": "heal",
+      "name": "Purge",
+      "targeting": "one-ally",
+      "usableOutOfBattle": true
+    },
+    {
+      "cost": 0,
       "effect": {},
       "element": "terra",
       "fieldEffect": "heave",
@@ -655,8 +690,12 @@
       "coin": 18,
       "drops": [
         {
-          "chance": 0.05,
-          "itemId": "leather-vest"
+          "chance": 0.25,
+          "itemId": "salve"
+        },
+        {
+          "chance": 0.4,
+          "itemId": "crawler-husk"
         }
       ],
       "id": "thicket-crawler",
@@ -930,6 +969,102 @@
     }
   ],
   "id": "starter",
+  "items": [
+    {
+      "artId": "mend",
+      "consumedOnUse": true,
+      "description": "Restores a modest amount of health.",
+      "id": "salve",
+      "kind": "consumable",
+      "name": "Salve",
+      "power": 60,
+      "stackLimit": 99,
+      "usableInBattle": true,
+      "usableOnField": true,
+      "value": 50
+    },
+    {
+      "artId": "greater-mend",
+      "consumedOnUse": true,
+      "description": "Restores health to the whole party.",
+      "id": "greater-salve",
+      "kind": "consumable",
+      "name": "Greater Salve",
+      "power": 80,
+      "stackLimit": 20,
+      "targeting": "all-allies",
+      "usableInBattle": true,
+      "usableOnField": true,
+      "value": 320
+    },
+    {
+      "artId": "renew",
+      "consumedOnUse": true,
+      "description": "Restores aether.",
+      "id": "aether-tonic",
+      "kind": "consumable",
+      "name": "Aether Tonic",
+      "power": 0,
+      "stackLimit": 99,
+      "usableInBattle": true,
+      "usableOnField": true,
+      "value": 120
+    },
+    {
+      "artId": "purge",
+      "consumedOnUse": true,
+      "description": "Clears venom and burns.",
+      "id": "antidote",
+      "kind": "consumable",
+      "name": "Antidote",
+      "power": 0,
+      "stackLimit": 99,
+      "usableInBattle": true,
+      "usableOnField": true,
+      "value": 40
+    },
+    {
+      "artId": "pyre-wave",
+      "consumedOnUse": true,
+      "description": "Scatters flame across the enemy line.",
+      "id": "firebomb",
+      "kind": "consumable",
+      "name": "Firebomb",
+      "power": 70,
+      "stackLimit": 20,
+      "usableInBattle": true,
+      "usableOnField": false,
+      "value": 180
+    },
+    {
+      "artId": "rally",
+      "consumedOnUse": true,
+      "description": "Rouses a fallen ally.",
+      "id": "waking-draught",
+      "kind": "consumable",
+      "name": "Waking Draught",
+      "power": 0,
+      "stackLimit": 20,
+      "usableInBattle": true,
+      "usableOnField": true,
+      "value": 400
+    },
+    {
+      "description": "Opens a way that was closed.",
+      "id": "sealed-writ",
+      "kind": "key",
+      "name": "Sealed Writ",
+      "value": 0
+    },
+    {
+      "description": "Trade goods.",
+      "id": "crawler-husk",
+      "kind": "material",
+      "name": "Crawler Husk",
+      "stackLimit": 99,
+      "value": 12
+    }
+  ],
   "motes": [
     {
       "bonus": {

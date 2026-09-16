@@ -47,6 +47,7 @@ lines.push(`ids.statuses ${sortedIds(registry.statuses)}`);
 lines.push(`ids.summons ${sortedIds(registry.summons)}`);
 lines.push(`ids.gear ${sortedIds(registry.gear)}`);
 lines.push(`ids.enemies ${sortedIds(registry.enemies)}`);
+lines.push(`ids.items ${sortedIds(registry.items)}`);
 
 // Derived stats at a level exercise the growth curves through the loader.
 for (const actorId of [...registry.actors.keys()].sort()) {
@@ -117,6 +118,15 @@ for (const moteId of [...registry.motes.keys()].sort()) {
     `mote.${moteId} element=${mote.element} effect=${String(effect.kind)} ` +
       `power=${num(typeof effect.power === 'number' ? effect.power : 0)} ` +
       `targeting=${String(effect.targeting ?? '-')} recovery=${mote.recoveryRounds ?? 3}`,
+  );
+}
+
+for (const itemId of [...registry.items.keys()].sort()) {
+  const item = registry.itemDef(itemId)!;
+  lines.push(
+    `item.${itemId} kind=${item.kind} art=${item.artId ?? '-'} power=${num(item.power ?? 0)} ` +
+      `targeting=${item.targeting ?? '-'} battle=${item.usableInBattle ?? false} field=${item.usableOnField ?? false} ` +
+      `consumed=${item.consumedOnUse ?? false} stack=${item.stackLimit ?? -1} value=${num(item.value ?? 0)}`,
   );
 }
 

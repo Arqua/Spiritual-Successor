@@ -9,12 +9,18 @@ import { deriveStats, isDowned, type ActorState } from '../domain/actor.js';
 import { restoreAllMotes } from '../domain/motes.js';
 import { levelForXp } from '../domain/stats.js';
 import type { EncounterDef } from '../domain/enemy.js';
+import type { Inventory } from '../domain/items.js';
 import type { BattleState, Combatant } from './state.js';
 
 export interface BattleSetup {
   party: ActorState[];
   encounter: EncounterDef;
   seed: string | number;
+  /**
+   * The party's bag, held by reference so consumption during the fight is
+   * permanent. Omitted means the party fights without items.
+   */
+  inventory?: Inventory;
 }
 
 export function createBattle(setup: BattleSetup, registry: ContentRegistry): BattleState {
@@ -74,6 +80,7 @@ export function createBattle(setup: BattleSetup, registry: ContentRegistry): Bat
     outcome: null,
     rewards: { xp: 0, coin: 0, itemIds: [] },
     noFlee: setup.encounter.noFlee ?? false,
+    inventory: setup.inventory ?? [],
   };
 }
 

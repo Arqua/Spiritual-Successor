@@ -13,9 +13,9 @@ demo/                    browser demo driving the TypeScript core
 ## Verify before you claim
 
 ```bash
-npm test                                   # 142 TypeScript tests
+npm test                                   # 163 TypeScript tests
 npm run typecheck                          # core (DOM-free) + browser configs
-cd unity/Aetherlight.Core.Tests && dotnet test   # 132 C# tests
+cd unity/Aetherlight.Core.Tests && dotnet test   # 152 C# tests
 ```
 
 Both typechecks must pass. `tsconfig.json` compiles the core **without** the DOM

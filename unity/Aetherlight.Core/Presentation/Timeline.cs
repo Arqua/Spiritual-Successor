@@ -271,6 +271,13 @@ namespace Aetherlight.Presentation
                         cursor += timing.Banner;
                         break;
 
+                    case ItemUsedEvent used:
+                        Emit(used.CombatantId, timing.WindUp, new PoseAction { Pose = "cast" });
+                        Emit(GlobalTrack, timing.Banner, new BannerAction { Text = Label(used.ItemId), Tone = BannerTone.Good });
+                        Emit(GlobalTrack, 1, new SfxAction { Cue = "item" });
+                        cursor += timing.WindUp;
+                        break;
+
                     case MessageEvent message:
                         Emit(GlobalTrack, timing.Banner, new BannerAction { Text = message.Text, Tone = BannerTone.Neutral });
                         cursor += timing.Banner;

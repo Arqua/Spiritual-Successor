@@ -65,6 +65,14 @@ namespace Aetherlight.Core
 
     public sealed class BattleEndedEvent : GameEvent { public BattleOutcome Outcome; }
     public sealed class RewardEvent : GameEvent { public long Xp; public long Coin; public List<string> ItemIds = new List<string>(); }
+    public sealed class ItemUsedEvent : GameEvent
+    {
+        public string CombatantId = "";
+        public string ItemId = "";
+        public List<string> TargetIds = new List<string>();
+        public bool Consumed;
+    }
+
     public sealed class MessageEvent : GameEvent { public string Text = ""; }
 
     public sealed class FieldEffectEvent : GameEvent
