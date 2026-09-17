@@ -26,6 +26,23 @@ Elevation is simply height, and depth sorting falls out of the camera. That is
 
 ## Installing
 
+Unity Hub has to create the project itself - it writes ProjectSettings tied to
+your Editor version - so create it at `unity/UnityProject` (2D template, Unity
+2021.3 LTS or newer), quit the Editor, then run:
+
+```bash
+node tools/unity-setup.mjs
+```
+
+That adds both packages to the manifest, copies the content pack into
+`Assets/Resources`, and drops in a smoke-test script. It parses and
+re-serializes the manifest rather than splicing text, so the missing-comma
+failure that leaves a project Unity will not open cannot happen. Running it
+twice changes nothing.
+
+The rest of this section is what the script does, for when you would rather do
+it by hand.
+
 Add both packages to `Packages/manifest.json`:
 
 ```json
