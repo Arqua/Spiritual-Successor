@@ -77,6 +77,14 @@ namespace Aetherlight.Tests
             _ => "?",
         };
 
+        private static string Spell(ItemKind kind) => kind switch
+        {
+            ItemKind.Consumable => "consumable",
+            ItemKind.Key => "key",
+            ItemKind.Material => "material",
+            _ => "?",
+        };
+
         /// <summary>JavaScript prints booleans lower-case; C# does not.</summary>
         private static string Spell(bool value) => value ? "true" : "false";
 
@@ -100,6 +108,7 @@ namespace Aetherlight.Tests
             lines.Add($"ids.summons {SortedIds(registry.Summons)}");
             lines.Add($"ids.gear {SortedIds(registry.Gear)}");
             lines.Add($"ids.enemies {SortedIds(registry.Enemies)}");
+            lines.Add($"ids.items {SortedIds(registry.Items)}");
 
             foreach (var actorId in registry.Actors.Keys.OrderBy(k => k, StringComparer.Ordinal))
             {
@@ -174,6 +183,19 @@ namespace Aetherlight.Tests
                     $"mote.{moteId} element={mote.Element.ToId()} effect={Spell(mote.Effect.Kind)} " +
                     $"power={Num(mote.Effect.Power)} " +
                     $"targeting={Spell(mote.Effect.Targeting)} recovery={mote.RecoveryRounds}");
+            }
+
+            foreach (var itemId in registry.Items.Keys.OrderBy(k => k, StringComparer.Ordinal))
+            {
+                var item = registry.ItemDef(itemId)!;
+                string targeting = item.Targeting.HasValue ? Spell(item.Targeting.Value) : "-";
+                string stack = item.StackLimit.HasValue
+                    ? item.StackLimit.Value.ToString(CultureInfo.InvariantCulture)
+                    : "-1";
+                lines.Add(
+                    $"item.{itemId} kind={Spell(item.Kind)} art={item.ArtId ?? "-"} power={Num(item.Power ?? 0)} " +
+                    $"targeting={targeting} battle={Spell(item.UsableInBattle)} field={Spell(item.UsableOnField)} " +
+                    $"consumed={Spell(item.ConsumedOnUse)} stack={stack} value={Num(item.Value)}");
             }
 
             return lines;

@@ -10,6 +10,12 @@ namespace Aetherlight.Battle
         public List<ActorState> Party = new List<ActorState>();
         public EncounterDef Encounter = new EncounterDef();
         public string Seed = "";
+
+        /// <summary>
+        /// The party's bag, held by reference so consumption during the fight is
+        /// permanent. Leave empty for a party fighting without items.
+        /// </summary>
+        public List<InventoryEntry> Inventory = new List<InventoryEntry>();
     }
 
     public sealed class BattleAftermath
@@ -29,6 +35,7 @@ namespace Aetherlight.Battle
             {
                 Rng = Rng.Seed(setup.Seed),
                 NoFlee = setup.Encounter.NoFlee,
+                Inventory = setup.Inventory,
             };
 
             for (int index = 0; index < setup.Party.Count; index++)

@@ -11,13 +11,14 @@
 import type { ActorState } from '../domain/actor.js';
 import type { Loadout } from '../domain/equipment.js';
 import type { Vec2 } from '../field/grid.js';
+// One InventoryEntry, owned by the domain. A save holds the party's bag; it
+// does not have a bag format of its own, and two structurally identical types
+// would drift the moment one of them gained a field.
+import type { InventoryEntry } from '../domain/items.js';
+
+export type { InventoryEntry };
 
 export const SAVE_VERSION = 1;
-
-export interface InventoryEntry {
-  itemId: string;
-  count: number;
-}
 
 export interface SaveFile {
   version: number;

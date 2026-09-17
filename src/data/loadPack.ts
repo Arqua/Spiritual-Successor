@@ -103,6 +103,7 @@ export function loadPack(source: string | unknown): LoadResult {
   pack.gear = section<NonNullable<ContentPack['gear']>[number]>('gear');
   pack.summons = section<NonNullable<ContentPack['summons']>[number]>('summons');
   pack.enemies = section<NonNullable<ContentPack['enemies']>[number]>('enemies');
+  pack.items = section<NonNullable<ContentPack['items']>[number]>('items');
 
   return { pack, issues };
 }

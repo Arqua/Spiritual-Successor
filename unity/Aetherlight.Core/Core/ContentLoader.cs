@@ -39,6 +39,7 @@ namespace Aetherlight.Core
             foreach (var node in root["gear"].Items) pack.Gear.Add(ReadGear(node));
             foreach (var node in root["summons"].Items) pack.Summons.Add(ReadSummon(node));
             foreach (var node in root["enemies"].Items) pack.Enemies.Add(ReadEnemy(node));
+            foreach (var node in root["items"].Items) pack.Items.Add(ReadItem(node));
 
             return pack;
         }
@@ -380,6 +381,24 @@ namespace Aetherlight.Core
             return def;
         }
 
+        private static ItemDef ReadItem(JsonValue node) => new ItemDef
+        {
+            Id = node["id"].AsString(),
+            Name = node["name"].AsString(),
+            Description = node["description"].IsNull ? null : node["description"].AsString(),
+            Kind = ParseItemKind(node["kind"].AsString()),
+            ArtId = node["artId"].IsNull ? null : node["artId"].AsString(),
+            // Absent power means "use the art's own", which is a different
+            // thing from a power of zero, so this stays nullable.
+            Power = node["power"].AsNullableDouble(),
+            Targeting = node["targeting"].IsNull ? (ArtTargeting?)null : ParseArtTargeting(node["targeting"].AsString()),
+            UsableInBattle = node["usableInBattle"].AsBool(),
+            UsableOnField = node["usableOnField"].AsBool(),
+            ConsumedOnUse = node["consumedOnUse"].AsBool(),
+            StackLimit = node["stackLimit"].AsNullableInt(),
+            Value = node["value"].AsDouble(),
+        };
+
         // --- enum vocabulary -------------------------------------------------
         //
         // Spelled exactly as the JSON spells them. An unrecognised value falls
@@ -428,6 +447,17 @@ namespace Aetherlight.Core
             "one-ally" => MoteTargeting.OneAlly,
             "all-allies" => MoteTargeting.AllAllies,
             _ => MoteTargeting.Self,
+        };
+
+        private static ItemKind ParseItemKind(string value) => value switch
+        {
+            "consumable" => ItemKind.Consumable,
+            "key" => ItemKind.Key,
+            "material" => ItemKind.Material,
+            // An unrecognised kind falls back to the inert option rather than
+            // something usable, so a pack from a newer schema cannot hand the
+            // player a consumable the rules do not understand.
+            _ => ItemKind.Material,
         };
 
         private static EquipSlot ParseSlot(string value) => value switch

@@ -289,6 +289,14 @@ export function buildTimeline(events: readonly GameEvent[], options: TimelineOpt
         cursor += timing.banner;
         break;
 
+      case 'item-used': {
+        emit({ track: event.combatantId, startMs: cursor, durationMs: timing.windUp, action: { kind: 'pose', pose: 'cast' } });
+        emit({ track: GLOBAL_TRACK, startMs: cursor, durationMs: timing.banner, action: { kind: 'banner', text: label(event.itemId), tone: 'good' } });
+        emit({ track: GLOBAL_TRACK, startMs: cursor, durationMs: 1, action: { kind: 'sfx', cue: 'item' } });
+        cursor += timing.windUp;
+        break;
+      }
+
       case 'message':
         emit({ track: GLOBAL_TRACK, startMs: cursor, durationMs: timing.banner, action: { kind: 'banner', text: event.text, tone: 'neutral' } });
         cursor += timing.banner;

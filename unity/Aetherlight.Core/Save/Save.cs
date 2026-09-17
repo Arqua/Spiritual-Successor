@@ -6,12 +6,6 @@ using Aetherlight.Domain;
 
 namespace Aetherlight.Save
 {
-    public sealed class InventoryEntry
-    {
-        public string ItemId = "";
-        public int Count;
-    }
-
     public sealed class SaveLocation
     {
         public string MapId = "";

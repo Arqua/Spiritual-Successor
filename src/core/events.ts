@@ -36,6 +36,7 @@ export type GameEvent =
   | { type: 'battle-ended'; outcome: 'victory' | 'defeat' | 'fled' }
   | { type: 'reward'; xp: number; coin: number; itemIds: string[] }
   | { type: 'field-effect'; abilityId: string; originX: number; originY: number; targetIds: string[] }
+  | { type: 'item-used'; combatantId: string; itemId: string; targetIds: string[]; consumed: boolean }
   | { type: 'message'; text: string };
 
 export type GameEventType = GameEvent['type'];

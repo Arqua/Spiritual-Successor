@@ -87,6 +87,17 @@ export function scaleStats(base: StatBlock, multipliers: Partial<Record<ScalarSt
   return out;
 }
 
+/**
+ * A stat block that contributes nothing.
+ *
+ * Used for effects that must not scale off whoever triggered them - an item,
+ * most obviously. A potion heals the same amount whoever drinks it, so the
+ * healer being good at healing must not make the potion better.
+ */
+export function neutralStats(): StatBlock {
+  return normalizeStats(zeroStats());
+}
+
 /** Clamp every stat to a sane floor so modifiers cannot drive a block negative. */
 export function normalizeStats(stats: StatBlock): StatBlock {
   const out = cloneStats(stats);

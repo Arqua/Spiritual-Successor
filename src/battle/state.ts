@@ -12,6 +12,7 @@ import type { RngState } from '../core/rng.js';
 import type { ActorState } from '../domain/actor.js';
 import type { StatBlock } from '../domain/stats.js';
 import type { Element } from '../domain/elements.js';
+import type { Inventory } from '../domain/items.js';
 
 export type Side = 'party' | 'foe';
 
@@ -52,6 +53,12 @@ export interface BattleState {
   rewards: { xp: number; coin: number; itemIds: string[] };
   /** Set when the encounter forbids fleeing. */
   noFlee: boolean;
+  /**
+   * The party's bag, held by reference. Consumption during a fight has to be
+   * permanent - a potion drunk in a battle you then flee is still gone - so
+   * this is the same array the field uses, not a copy.
+   */
+  inventory: Inventory;
 }
 
 export type BattleCommand =

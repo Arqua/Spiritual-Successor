@@ -20,6 +20,7 @@ import type { MoteDef } from '../domain/motes.js';
 import type { StatusDef } from '../domain/status.js';
 import type { SummonDef } from '../domain/summons.js';
 import type { EnemyDef } from '../domain/enemy.js';
+import type { ItemDef } from '../domain/items.js';
 
 export interface ContentPack {
   id: string;
@@ -32,6 +33,7 @@ export interface ContentPack {
   summons?: SummonDef[];
   statuses?: StatusDef[];
   enemies?: EnemyDef[];
+  items?: ItemDef[];
 }
 
 export interface ValidationIssue {
@@ -51,6 +53,7 @@ export class ContentRegistry {
   readonly summons = new Map<string, SummonDef>();
   readonly statuses = new Map<string, StatusDef>();
   readonly enemies = new Map<string, EnemyDef>();
+  readonly items = new Map<string, ItemDef>();
 
   private readonly loadedPacks: string[] = [];
 
@@ -69,6 +72,7 @@ export class ContentRegistry {
     put(this.summons, pack.summons);
     put(this.statuses, pack.statuses);
     put(this.enemies, pack.enemies);
+    put(this.items, pack.items);
     this.loadedPacks.push(pack.id);
     return this;
   }
@@ -89,6 +93,7 @@ export class ContentRegistry {
   summonDef = (id: string): SummonDef | undefined => this.summons.get(id);
   statusDef = (id: string): StatusDef | undefined => this.statuses.get(id);
   enemyDef = (id: string): EnemyDef | undefined => this.enemies.get(id);
+  itemDef = (id: string): ItemDef | undefined => this.items.get(id);
 
   /** Context object accepted by the actor derivation functions. */
   actorContext() {
@@ -137,9 +142,19 @@ export class ContentRegistry {
     }
     for (const enemy of this.enemies.values()) {
       for (const artId of enemy.arts ?? []) requireArt(artId, 'enemy', enemy.id);
+    }
+    for (const item of this.items.values()) {
+      requireArt(item.artId, 'item', item.id);
+      if (item.kind === 'consumable' && !item.artId) {
+        issues.push({ severity: 'warning', packId, entity: 'item', id: item.id, message: 'consumable does nothing when used' });
+      }
+    }
+    for (const enemy of this.enemies.values()) {
       for (const drop of enemy.drops ?? []) {
-        if (!this.gear.has(drop.itemId)) {
-          issues.push({ severity: 'warning', packId, entity: 'enemy', id: enemy.id, message: `drop "${drop.itemId}" is not gear` });
+        // A drop naming a real item is the common case now that items exist;
+        // the gear fallback stays for packs written before they did.
+        if (!this.items.has(drop.itemId) && !this.gear.has(drop.itemId)) {
+          issues.push({ severity: 'warning', packId, entity: 'enemy', id: enemy.id, message: `drop "${drop.itemId}" is neither an item nor gear` });
         }
       }
     }

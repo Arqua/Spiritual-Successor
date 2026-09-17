@@ -24,8 +24,9 @@ import { gearProcs } from '../domain/equipment.js';
 import { tickRecovery, unleashMote, type MoteDef } from '../domain/motes.js';
 import { statusLandChance, type StatusDef } from '../domain/status.js';
 import { paySummonCost, summonBaseDamage, summonCostTotal } from '../domain/summons.js';
+import { hasItem, isUsable, removeItem } from '../domain/items.js';
 import type { StatBlock } from '../domain/stats.js';
-import { applyModifiers, normalizeStats } from '../domain/stats.js';
+import { applyModifiers, neutralStats, normalizeStats } from '../domain/stats.js';
 import { DEFAULT_DAMAGE_CONFIG, rollDamage, rollEvaded, rollHeal, type DamageConfig } from './damage.js';
 import { buildTurnOrder } from './order.js';
 import {
@@ -175,9 +176,7 @@ function executeCommand(
       log.push({ type: 'action-declared', combatantId: actor.id, action: 'defend', targetIds: [] });
       break;
     case 'item':
-      // Items are project-specific; the core emits the intent and lets the
-      // host game apply its own inventory rules.
-      log.push({ type: 'action-declared', combatantId: actor.id, action: `item:${command.itemId}`, targetIds: command.targetId ? [command.targetId] : [] });
+      doItem(state, actor, command.itemId, command.targetId, registry, config, log);
       break;
   }
 }
@@ -259,6 +258,19 @@ function doArt(
   applyArtToTargets(state, actor, art, targets, registry, config, log, 1);
 }
 
+/**
+ * How an effect resolves when it does not belong to the actor using it.
+ *
+ * Items are the case this exists for: the effect must not scale off whoever
+ * reached into the bag, and it must not be dodged on the strength of that
+ * person's agility either - a thrown flask does not miss because the thrower
+ * is slow.
+ */
+interface ApplyOverrides {
+  stats?: StatBlock;
+  skipEvasion?: boolean;
+}
+
 function applyArtToTargets(
   state: BattleState,
   actor: Combatant,
@@ -268,9 +280,10 @@ function applyArtToTargets(
   config: DamageConfig,
   log: EventLog,
   powerScale: number,
+  overrides: ApplyOverrides = {},
 ): void {
   const primary = targets[0];
-  const attackerStats = statsOf(actor, registry);
+  const attackerStats = overrides.stats ?? statsOf(actor, registry);
 
   for (const target of targets) {
     const distance = primary ? slotDistance(primary, target) : 0;
@@ -287,7 +300,7 @@ function applyArtToTargets(
     }
 
     const defenderStats = statsOf(target, registry);
-    if (rollEvaded(state.rng, attackerStats, defenderStats, art.accuracy ?? 1, config)) {
+    if (!overrides.skipEvasion && rollEvaded(state.rng, attackerStats, defenderStats, art.accuracy ?? 1, config)) {
       log.push({ type: 'miss', sourceId: actor.id, targetId: target.id });
       continue;
     }
@@ -567,6 +580,65 @@ function doSummon(
       log,
     );
   }
+}
+
+/**
+ * Use an item.
+ *
+ * An item is a delivery mechanism for an art: it names one, supplies its own
+ * power, and is resolved through the same path a cast ability takes. The
+ * differences are that it costs no aether, it does not scale off the user, and
+ * it is consumed whether or not the effect achieves anything - drinking a
+ * potion at full health still empties the bottle.
+ */
+function doItem(
+  state: BattleState,
+  actor: Combatant,
+  itemId: string,
+  targetId: string | undefined,
+  registry: ContentRegistry,
+  config: DamageConfig,
+  log: EventLog,
+): void {
+  const item = registry.itemDef(itemId);
+  if (!item) {
+    log.push({ type: 'turn-skipped', combatantId: actor.id, reason: 'unknown-item' });
+    return;
+  }
+  if (!isUsable(item, 'battle')) {
+    log.push({ type: 'turn-skipped', combatantId: actor.id, reason: 'item-not-usable' });
+    return;
+  }
+  if (!hasItem(state.inventory, itemId)) {
+    log.push({ type: 'turn-skipped', combatantId: actor.id, reason: 'item-missing' });
+    return;
+  }
+
+  const baseArt = registry.artDef(item.artId ?? '');
+  if (!baseArt) {
+    log.push({ type: 'turn-skipped', combatantId: actor.id, reason: 'unknown-item' });
+    return;
+  }
+
+  // The item's own numbers replace the art's, since an art is balanced around
+  // a caster's stats and an item is not.
+  const art: ArtDef = {
+    ...baseArt,
+    cost: 0,
+    targeting: item.targeting ?? baseArt.targeting,
+    effect: { ...baseArt.effect, power: item.power ?? baseArt.effect.power },
+  };
+
+  const consumed = item.consumedOnUse !== false;
+  if (consumed) removeItem(state.inventory, itemId, 1);
+
+  const targets = selectTargets(state, actor, art, targetId);
+  log.push({ type: 'item-used', combatantId: actor.id, itemId, targetIds: targets.map((t) => t.id), consumed });
+
+  applyArtToTargets(state, actor, art, targets, registry, config, log, 1, {
+    stats: neutralStats(),
+    skipEvasion: true,
+  });
 }
 
 function doFlee(state: BattleState, actor: Combatant, registry: ContentRegistry, log: EventLog): void {

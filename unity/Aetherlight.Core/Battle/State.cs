@@ -57,6 +57,13 @@ namespace Aetherlight.Battle
         public BattleRewards Rewards = new BattleRewards();
         /// <summary>Set when the encounter forbids fleeing.</summary>
         public bool NoFlee;
+
+        /// <summary>
+        /// The party's bag, held by reference. Consumption during a fight has to
+        /// be permanent - a potion drunk in a battle you then flee is still
+        /// gone - so this is the same list the field uses, not a copy.
+        /// </summary>
+        public List<InventoryEntry> Inventory = new List<InventoryEntry>();
     }
 
     public enum CommandKind { Attack, Art, Unleash, Summon, Defend, Item, Flee }
