@@ -31,10 +31,17 @@ your Editor version - so create it at `unity/UnityProject` (2D template, Unity
 2021.3 LTS or newer), quit the Editor, then run:
 
 ```bash
-node tools/unity-setup.mjs
+node tools/unity-setup.mjs          # macOS / Linux, or anywhere with Node
 ```
 
-That adds both packages to the manifest, copies the content pack into
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\unity-setup.ps1    # Windows
+```
+
+Use the PowerShell one on Windows unless you already have Node - Unity does not
+install it, so `node` is usually not on a Windows machine's PATH.
+
+Either adds both packages to the manifest, copies the content pack into
 `Assets/Resources`, and drops in a smoke-test script. It parses and
 re-serializes the manifest rather than splicing text, so the missing-comma
 failure that leaves a project Unity will not open cannot happen. Running it

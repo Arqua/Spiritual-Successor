@@ -40,8 +40,11 @@ feedback loop while porting, and Unity for the real thing.
 
 1. Create the project in the Unity Hub (2021.3 LTS or newer) at
    `unity/UnityProject`, then quit the Editor and run
-   `node tools/unity-setup.mjs`, which does steps 2 and 3 for you and adds a
-   smoke test. The steps below are what it does, by hand.
+   the setup script, which does steps 2 and 3 for you and adds a smoke test:
+   `node tools/unity-setup.mjs`, or on Windows
+   `powershell -ExecutionPolicy Bypass -File tools\unity-setup.ps1` (Unity does
+   not install Node, so `node` is usually absent there). The steps below are
+   what it does, by hand.
 2. Add the core as a local package in `unity/UnityProject/Packages/manifest.json`:
 
    ```json
